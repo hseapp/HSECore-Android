@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Core</string>
+    <string name="error_occurred">Что-то пошло не так</string>
+    <string name="search">Поиск</string>
+    <string name="error_occurred_description">Проверьте подключение к сети и повторите попытку.</string>
+    <string name="retry">Повторить</string>
+    <string name="empty_list">Пусто</string>
+    <string name="empty_list_description">По запросу не нашлось никаких данных.</string>
+</resources>

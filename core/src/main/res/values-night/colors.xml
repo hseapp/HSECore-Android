@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="windowBackground">#202124</color>
+    <color name="statusBar">#33000000</color>
+    <color name="navigationBar">#69000000</color>
+    <color name="bottomNavigation">#33000000</color>
+
+    <color name="textPrimary">#f1f3f4</color>
+    <color name="textSecondary">#80868b</color>
+
+    <color name="buttonDisabledText">#515151</color>
+
+    <color name="iconNormal">#5f6368</color>
+    <color name="iconAction">#80868c</color>
+
+    <color name="navIconActive">@color/blue</color>
+    <color name="navIconInactive">#70ffffff</color>
+
+    <color name="chipColor">#25ffffff</color>
+
+    <color name="searchBarBackground">#25ffffff</color>
+    <color name="searchBarInlineIcon">@color/iconAction</color>
+
+    <!--    <color name="buttonNormal">#888</color>-->
+<!--    <color name="buttonNormalText">#fff</color>-->
+<!--    <color name="buttonTransparent">#30ffffff</color>-->
+<!--    <color name="buttonTransparentText">#fff</color>-->
+
+    <color name="editTextBorderNormal">@color/buttonNormal</color>
+    <color name="editTextBorderPressed">#777</color>
+
+    <color name="divider">#515151</color>
+
+    <color name="blue">#4285f4</color>
+</resources>

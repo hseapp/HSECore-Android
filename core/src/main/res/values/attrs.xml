@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HseButton">
+        <attr name="type" format="enum">
+            <enum name="BLUE" value="0"/>
+            <enum name="TRANSPARENT" value="1"/>
+            <enum name="TRANSPARENT_WITH_BORDER" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>

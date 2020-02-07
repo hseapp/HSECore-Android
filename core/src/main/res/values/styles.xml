@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryDark">@color/blueDark</item>
+        <item name="colorAccent">@color/blue</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/statusBar</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigationBar
+        </item>
+    </style>
+
+    <style name="App.ThemeOverlay.Toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">@color/windowBackground</item>
+        <item name="android:fontFamily">@font/futuramedium</item>
+        <item name="fontFamily">@font/futuramedium</item>
+    </style>
+
+    <style name="App.ThemeOverlay.Toolbar.Title" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="AppTheme.Text">
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="AppTheme.Text.Title" parent="AppTheme.Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/futuramedium</item>
+    </style>
+
+    <style name="AppTheme.Text.TabTitle" parent="AppTheme.Text">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/futuramedium</item>
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="AppTheme.Text.Title2" parent="AppTheme.Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="AppTheme.Text.Primary" parent="AppTheme.Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+
+    <style name="AppTheme.Text.BodyLink" parent="AppTheme.Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="AppTheme.Text.Secondary" parent="AppTheme.Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="AppTheme.Text.Subtitle" parent="AppTheme.Text">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="AppTheme.Text.Link" parent="AppTheme.Text.Primary">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="AppTheme.Text.Link.Bold" parent="AppTheme.Text.Link">
+        <item name="android:fontFamily">@font/futuramedium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppTheme.Text.Chip" parent="AppTheme.Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:minHeight">28dp</item>
+        <item name="android:height">28dp</item>
+        <item name="android:background">@drawable/text_chip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+
+    <style name="BottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+</resources>
