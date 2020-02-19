@@ -205,3 +205,8 @@ fun downloadFile(url: String, fileName: String? = "File") {
     request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
     dm.enqueue(request)
 }
+
+fun <T> List<T>.lastSafe(): T? {
+    if (isEmpty()) return null
+    return get(size - 1)
+}
