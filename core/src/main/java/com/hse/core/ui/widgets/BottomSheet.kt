@@ -49,7 +49,7 @@ abstract class BottomSheet(val context: Context) {
 
         dialog?.setOnShowListener {
             if (it is BottomSheetDialog) {
-                BottomSheetBehavior.from(it.findViewById<ViewGroup>(com.google.android.material.R.id.design_bottom_sheet))
+                BottomSheetBehavior.from(it.findViewById<ViewGroup>(com.google.android.material.R.id.design_bottom_sheet)!!)
                     .apply {
                         peekHeight = this@BottomSheet.peekHeight
                         isHideable = this@BottomSheet.isHidable
