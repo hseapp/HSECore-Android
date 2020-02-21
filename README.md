@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https:/digital.hse.ru">
+  <a href="https://hse.ru/web">
     <img width="200px" src="https://s3.hseapp.ru/media/hsecore/hse-digital-logo-light/image-1582238921120.svg">
   </a>
 </p>
