@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://baseweb.design">
-    <img width="250px" src="https://s3.hseapp.ru/media/hsecore/hse-digital-logo-light/image-1582238921120.svg">
+  <a href="https:/digital.hse.ru">
+    <img width="200px" src="https://s3.hseapp.ru/media/hsecore/hse-digital-logo-light/image-1582238921120.svg">
   </a>
 </p>
 
@@ -10,7 +10,7 @@
 **HSE Core Android** – библиотека общих компонентов дизайн-системы Высшей школы экономики для мобильных приложений на Android. HSE Core Android является частью будущего HSE Mobile SDK.
 
 <p align="center">
-  <a href="https://www.hse.ru/web/mobile/">
+  <a href="https://vk.com/hseapp">
     <img width="500px" src="https://s3.hseapp.ru/media/hsecore/promo_1/image-1582238717260.png">
   </a>
 </p>
