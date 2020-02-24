@@ -156,7 +156,8 @@ fun View.animateTranslationZ(
 
 fun color(@ColorRes res: Int) = ContextCompat.getColor(BaseApplication.appContext, res)
 fun string(@StringRes res: Int) = BaseApplication.appContext.getString(res)
-fun drawable(@DrawableRes res: Int) = BaseApplication.appContext.getDrawable(res)
+fun drawable(@DrawableRes res: Int) =
+    if (res == 0) null else BaseApplication.appContext.getDrawable(res)
 
 fun openBrowser(context: Context, url: String) {
     try {

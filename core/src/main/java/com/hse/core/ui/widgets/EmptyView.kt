@@ -42,7 +42,7 @@ class EmptyView @JvmOverloads constructor(
 
     init {
         orientation = VERTICAL
-        setPadding(dip(36f), 0, dip(36f), 0)
+        setPadding(dip(36f), dip(24f), dip(36f), dip(24f))
         gravity = Gravity.CENTER
         addView(image, dip(120f), dip(120f))
         (image.layoutParams as LayoutParams).bottomMargin = dip(24f)
@@ -68,9 +68,9 @@ class EmptyView @JvmOverloads constructor(
         subtitle.setVisible()
     }
 
-    fun setButton(text: String, action: () -> Unit) {
+    fun setButton(text: String, action: (() -> Unit)?) {
         button.text = text
-        button.onClick { action() }
+        button.onClick { action?.invoke() }
         button.setVisible()
     }
 }

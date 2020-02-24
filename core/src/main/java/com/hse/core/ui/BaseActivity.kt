@@ -1,5 +1,6 @@
 package com.hse.core.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.hse.core.BaseApplication
@@ -34,6 +35,11 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (navigation?.onBackPressed() == false) super.onBackPressed()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        navigation?.getCurrentTopFragment()?.onActivityResult(requestCode, resultCode, data)
     }
 
 }
