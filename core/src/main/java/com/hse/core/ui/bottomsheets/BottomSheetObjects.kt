@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 National Research University Higher School of Economics
+ * All Rights Reserved.
+ */
+
 package com.hse.core.ui.bottomsheets
 
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_DATE_FROM_TO

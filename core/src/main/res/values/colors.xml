@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 National Research University Higher School of Economics
+  ~ All Rights Reserved.
+  -->
+
 <resources>
     <color name="windowBackground">#fff</color>
     <color name="statusBar">#F5F5F5</color>

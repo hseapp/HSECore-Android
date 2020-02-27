@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 National Research University Higher School of Economics
+ * All Rights Reserved.
+ */
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {

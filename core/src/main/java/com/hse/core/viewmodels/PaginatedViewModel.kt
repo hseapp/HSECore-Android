@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2020 National Research University Higher School of Economics
+ * All Rights Reserved.
+ */
+
 package com.hse.core.viewmodels
 
 import androidx.lifecycle.LifecycleOwner

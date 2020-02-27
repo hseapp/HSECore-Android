@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 National Research University Higher School of Economics
+  ~ All Rights Reserved.
+  -->
+
 <resources>
     <dimen name="progressbar_size">40dp</dimen>
 </resources>
