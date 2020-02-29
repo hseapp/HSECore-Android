@@ -185,6 +185,8 @@ fun alphaColor(@ColorInt color: Int, factor: Float): Int {
 
 fun isBitSet(value: Int, bit: Int) = value and bit != 0
 
+fun isBitSetOrEmpty(value: Int, bit: Int) = value == 0 || value and bit != 0
+
 fun getFileSizeString(size: Long?): String? {
     if (size == null) return null
     val df = DecimalFormat("0.00")
@@ -216,3 +218,11 @@ fun <T> List<T>.lastSafe(): T? {
     if (isEmpty()) return null
     return get(size - 1)
 }
+
+//operator fun Int.minus(i: Int?): Int {
+//    return i?.minus(this) ?: this
+//}
+//
+//operator fun Int.plus(i: Int?): Int {
+//    return i?.plus(this) ?: this
+//}

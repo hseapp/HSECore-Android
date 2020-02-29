@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.R
 import com.hse.core.common.color
 import com.hse.core.common.dip
-import com.hse.core.common.drawable
 import com.hse.core.common.onClick
 
 class HorizontalChipsHolder(parent: ViewGroup) : BaseBottomSheetHolder(
@@ -79,21 +78,24 @@ class HorizontalChipAdapter :
             setTextColor(
                 when {
                     item.isSpecial -> color(R.color.blue)
-                    item.isCheckable -> if (item.isChecked) color(R.color.textPrimary) else color(R.color.textSecondary)
+                    item.isCheckable -> if (item.isChecked) 0xffffffff.toInt() else color(R.color.textPrimary)
                     else -> color(R.color.textPrimary)
                 }
             )
 
             setCompoundDrawablesWithIntrinsicBounds(
-                if (!item.isCheckable) item.drawableLeft else {
-                    if (item.isChecked) drawable(R.drawable.ic_done_16dp) else null
-                },
+                if (item.isCheckable) null else item.drawableLeft,
                 null,
                 item.drawableRight,
                 null
             )
 
-            setBackgroundResource(if (item.isSpecial) R.drawable.bottom_sheet_chip_selected else R.drawable.bottom_sheet_chip_normal)
+            val background  = when {
+                item.isSpecial -> R.drawable.bottom_sheet_chip_special
+                item.isChecked -> R.drawable.bottom_sheet_chip_selected
+                else -> R.drawable.bottom_sheet_chip_normal
+            }
+            setBackgroundResource(background)
         }
     }
 
@@ -114,7 +116,7 @@ class HorizontalChipAdapter :
         init {
             itemView.onClick {
                 val item = items[layoutPosition]
-                if (item.isSpecial != true) {
+                if (!item.isSpecial) {
                     item.isChecked = !item.isChecked
                     notifyItemChanged(layoutPosition)
                 }

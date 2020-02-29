@@ -85,16 +85,10 @@ abstract class PaginatedRecyclerAdapter<T>(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
-    }
-
     private class LoadingFooterHolder(item: View) : RecyclerView.ViewHolder(item)
 
     companion object {
         const val ITEM_TYPE_ITEM = 1
         const val ITEM_TYPE_FOOTER = -1000
-        const val ITEM_TYPE_EMPTY = -2000
-        const val ITEM_TYPE_PLACEHOLDER = 0
     }
 }

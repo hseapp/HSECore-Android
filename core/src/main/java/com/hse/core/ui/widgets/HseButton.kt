@@ -12,7 +12,7 @@ import android.text.style.ImageSpan
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import com.hse.core.R
 import com.hse.core.common.color
 import com.hse.core.common.dip
@@ -24,7 +24,7 @@ class HseButton @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) :
-    TextView(context, attrs, defStyleAttr) {
+    AppCompatTextView(context, attrs, defStyleAttr) {
 
     private val drawables = arrayOf(0, 0)
 
@@ -45,15 +45,15 @@ class HseButton @JvmOverloads constructor(
     fun setType(type: Type) {
         when (type) {
             Type.BLUE -> {
-                setBackgroundResource(R.drawable.hse_button_selector_blue)
+                setBackgroundResource(R.drawable.hse_button_blue_selector)
                 setTextColor(color(R.color.buttonNormalText))
             }
             Type.TRANSPARENT -> {
-                setBackgroundResource(R.drawable.hse_button_selector_transparent)
+                setBackgroundResource(R.drawable.hse_button_transparent_normal)
                 setTextColor(color(R.color.buttonTransparentText))
             }
             Type.TRANSPARENT_WITH_BORDER -> {
-                setBackgroundResource(R.drawable.hse_button_selector_transparent_w_border)
+                setBackgroundResource(R.drawable.hse_button_transparent_border_normal)
                 setTextColor(color(R.color.buttonTransparentText))
             }
         }
