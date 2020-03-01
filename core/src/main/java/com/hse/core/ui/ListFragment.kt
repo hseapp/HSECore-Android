@@ -50,7 +50,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     open fun getOverlayViewsMargin() = 0
 
     open fun getErrorView(t: Throwable?): View {
-        return EmptyView(activity!!).apply {
+        return EmptyView(requireContext()).apply {
             setImage(R.drawable.nointernetru)
             setTitle(string(R.string.error_occurred))
             setSubtitle(string(R.string.error_occurred_description))
@@ -59,7 +59,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     }
 
     open fun getEmptyView(): View {
-        return EmptyView(activity!!).apply {
+        return EmptyView(requireContext()).apply {
             setImage(R.drawable.nodata)
             setTitle(string(R.string.empty_list))
             setSubtitle(string(R.string.empty_list_description))
@@ -142,7 +142,6 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
             overlayViews.add(errorView)
             mainLayout?.addView(
                 errorView,
-                0,
                 CoordinatorLayout.LayoutParams(
                     CoordinatorLayout.LayoutParams.MATCH_PARENT,
                     CoordinatorLayout.LayoutParams.MATCH_PARENT

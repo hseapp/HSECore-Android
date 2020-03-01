@@ -74,8 +74,8 @@ class EmptyView @JvmOverloads constructor(
     }
 
     fun setButton(text: String, action: (() -> Unit)?) {
+        button.setVisible()
         button.text = text
         button.onClick { action?.invoke() }
-        button.setVisible()
     }
 }
