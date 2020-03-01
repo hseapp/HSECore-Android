@@ -47,8 +47,11 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     open fun canFinish() = true
     open fun onFragmentStackSelected() = true
 
+    private var postponedFinish = false
+
     fun finish() {
-        activity()?.onBackPressed()
+        if (isHidden) postponedFinish = true
+        else activity()?.onBackPressed()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +62,10 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         }
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden && postponedFinish) activity()?.onBackPressed()
+    }
 
     fun enableAppBarShadowHandling(
         recyclerView: RecyclerView?,

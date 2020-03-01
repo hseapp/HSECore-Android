@@ -5,16 +5,26 @@
 
 package com.hse.core.ui.widgets
 
+import android.app.Dialog
 import android.content.Context
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
+import android.os.Build
+import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.annotation.RequiresApi
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.hse.core.R
+import com.hse.core.common.color
 import com.hse.core.common.dip
+
 
 abstract class BottomSheet(val context: Context) {
 
@@ -23,12 +33,11 @@ abstract class BottomSheet(val context: Context) {
 
     open fun onDismiss() {}
 
-    protected var dialog: BottomSheetDialog? = null
+    protected var dialog: SheetDialog? = null
         private set
 
     protected var defaultState = -1
     protected var peekHeight = dip(600f)
-    protected var isHidable = true
     protected var bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
@@ -39,12 +48,11 @@ abstract class BottomSheet(val context: Context) {
         }
     }
 
-
     fun show() {
         val bottomView = getBottomView()
 
         val dialogView = getDecoratedView()
-        dialog = BottomSheetDialog(context, R.style.BottomSheet)
+        dialog = SheetDialog(context, R.style.BottomSheet)
         dialog?.setContentView(dialogView)
         dialog?.setOnDismissListener { onDismiss() }
         dialog?.setOnCancelListener { onDismiss() }
@@ -57,7 +65,7 @@ abstract class BottomSheet(val context: Context) {
                 BottomSheetBehavior.from(it.findViewById<ViewGroup>(com.google.android.material.R.id.design_bottom_sheet)!!)
                     .apply {
                         peekHeight = this@BottomSheet.peekHeight
-                        isHideable = this@BottomSheet.isHidable
+                        isHideable = false //this@BottomSheet.isHidable
                         if (defaultState >= 0) state = defaultState
                         setBottomSheetCallback(bottomSheetCallback)
                     }
@@ -92,5 +100,32 @@ abstract class BottomSheet(val context: Context) {
             LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null, false) as ViewGroup
         layout.findViewById<ViewGroup>(R.id.content).addView(getView())
         return layout
+    }
+
+    inner class SheetDialog(context: Context, style: Int) : BottomSheetDialog(context, style) {
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                setWhiteNavigationBar(this)
+            }
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.M)
+        private fun setWhiteNavigationBar(dialog: Dialog) {
+            dialog.window?.apply {
+                val metrics = DisplayMetrics()
+                windowManager.defaultDisplay.getMetrics(metrics)
+                val dimDrawable = GradientDrawable()
+                val navigationBarDrawable = GradientDrawable().apply {
+                    shape = GradientDrawable.RECTANGLE
+                    setColor(color(R.color.windowBackground))
+                }
+                val layers = arrayOf<Drawable>(dimDrawable, navigationBarDrawable)
+                val windowBackground = LayerDrawable(layers).apply {
+                    setLayerInsetTop(1, metrics.heightPixels)
+                }
+                setBackgroundDrawable(windowBackground)
+            }
+        }
     }
 }

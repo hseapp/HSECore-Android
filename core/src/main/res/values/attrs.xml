@@ -11,5 +11,6 @@
             <enum name="TRANSPARENT" value="1"/>
             <enum name="TRANSPARENT_WITH_BORDER" value="2"/>
         </attr>
+        <attr name="icon" format="reference"/>
     </declare-styleable>
 </resources>

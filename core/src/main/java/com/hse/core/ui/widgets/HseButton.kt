@@ -38,8 +38,11 @@ class HseButton @JvmOverloads constructor(
 
         val a = getContext().obtainStyledAttributes(attrs, R.styleable.HseButton)
         val ordinal = a.getInt(R.styleable.HseButton_type, 0)
+        drawables[0] = a.getResourceId(R.styleable.HseButton_icon, 0)
         val buttonType = Type.values()[ordinal]
         setType(buttonType)
+
+        if (drawables[0] != 0 || drawables[1] != 0) text = text // hack
     }
 
     fun setType(type: Type) {
