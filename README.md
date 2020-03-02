@@ -36,6 +36,22 @@
 ## Пример приложения, использующего HSE Core Android
 Coming soon.
 
+## How to
+Step 1. Add the JitPack repository to your build file
+Add it in your root build.gradle at the end of repositories:
+
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+  
+Step 2. Add the dependency
+	dependencies {
+	        implementation 'com.github.hseapp:hsecore:Tag'
+	}
+
 ## Лицензия
 ```license
 Copyright 2020 National Research University Higher School of Economics
