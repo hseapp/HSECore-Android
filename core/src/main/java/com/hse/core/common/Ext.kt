@@ -170,7 +170,7 @@ fun openBrowser(context: Context, url: String) {
         i.data = Uri.parse(url)
         context.startActivity(i)
     } catch (e: Exception) {
-        e.printStackTrace()
+        e
     }
 }
 
