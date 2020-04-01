@@ -96,7 +96,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         }
     }
 
-    protected fun checkAppBarShadow(
+    protected open fun checkAppBarShadow(
         appBarLayout: AppBarLayout?,
         layoutManager: LinearLayoutManager?
     ) {

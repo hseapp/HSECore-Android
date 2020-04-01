@@ -49,6 +49,8 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
 
     open fun getOverlayViewsMargin() = 0
 
+    open fun onDataReceived(list: List<E>) {}
+
     open fun getErrorView(t: Throwable?): View {
         return EmptyView(requireContext()).apply {
             setImage(R.drawable.nointernetru)
@@ -123,6 +125,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
 
         if (adapter != null) {
             viewModel.observe(viewLifecycleOwner, Observer {
+                onDataReceived(it)
                 adapter?.submitList(it, savedInstanceState != null) { checkForEmpty() }
             })
         }

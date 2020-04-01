@@ -23,7 +23,6 @@ import kotlin.reflect.KClass
 @MapKey
 annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
-//@Singleton
 open class BaseViewModelFactory @Inject constructor(
     private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
