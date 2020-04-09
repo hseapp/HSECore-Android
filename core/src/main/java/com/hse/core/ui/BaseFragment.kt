@@ -6,11 +6,13 @@
 package com.hse.core.ui
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IntRange
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,15 +23,21 @@ import com.hse.core.common.activity
 import com.hse.core.common.animateTranslationZ
 import com.hse.core.common.dp
 import com.hse.core.navigation.CommonViewParamHolder
-import com.hse.core.ui.BaseFragment.Builder.Companion.COMMON_VIEWS
+import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_COMMON_VIEWS
+import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_REQUEST_CODE
 import com.hse.core.viewmodels.BaseViewModel
 
 
 abstract class BaseFragment<T : BaseViewModel> : Fragment() {
+    open var flags = 0
     var isRootFragment = false
     val commonViews = HashMap<Int, CommonViewParamHolder>()
-    open var flags = 0
     lateinit var viewModel: T
+
+    internal var requestCode = -1
+    internal var resultData: Intent? = null
+    internal var resultCode = Activity.RESULT_CANCELED
+
     private var appBarOffset = 0
     private val appBarOffsetThreshold = dp(48f)
 
@@ -41,8 +49,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) {
-    }
+    ) {}
 
     open fun canFinish() = true
     open fun onFragmentStackSelected() = true
@@ -54,12 +61,18 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         else activity()?.onBackPressed()
     }
 
+    fun setResult(result: Int, data: Intent? = null) {
+        this.resultCode = result
+        this.resultData = data
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = provideViewModel()
-        arguments?.getParcelableArrayList<CommonViewParamHolder>(COMMON_VIEWS)?.forEach {
+        arguments?.getParcelableArrayList<CommonViewParamHolder>(ARG_COMMON_VIEWS)?.forEach {
             commonViews[it.id] = it
         }
+        requestCode = arguments?.getInt(ARG_REQUEST_CODE) ?: -1
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -148,8 +161,9 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
             return this
         }
 
-        fun go(ctx: BaseActivity?, rootTag: String? = null) {
-            arguments.putParcelableArrayList(COMMON_VIEWS, commonViews)
+        fun go(ctx: BaseActivity?, rootTag: String? = null, @IntRange(from = -1, to = Int.MAX_VALUE.toLong()) requestCode: Int = -1) {
+            arguments.putParcelableArrayList(ARG_COMMON_VIEWS, commonViews)
+            arguments.putInt(ARG_REQUEST_CODE, requestCode)
             val fragment = fragment.newInstance().apply {
                 arguments = this@Builder.arguments
             }
@@ -158,7 +172,8 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         }
 
         companion object {
-            const val COMMON_VIEWS = "common_views"
+            const val ARG_COMMON_VIEWS = "common_views"
+            const val ARG_REQUEST_CODE = "request_code"
         }
     }
 }

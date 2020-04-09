@@ -68,8 +68,14 @@ class Navigation(
         if (list.isNullOrEmpty() || list.size == 1) return false
         val topFragment = list[list.size - 1]
         if (!topFragment.canFinish()) return true
+        val resultCode = topFragment.resultCode
+        val resultData = topFragment.resultData
+        val requestCode = topFragment.requestCode
         removeFragment(topFragment, list)
-        showTopFragmentInStack(currentRoot)
+        val currentFragment = showTopFragmentInStack(currentRoot)
+        if (requestCode >= 0) {
+            currentFragment?.onActivityResult(requestCode, resultCode, resultData)
+        }
         return true
     }
 
@@ -178,12 +184,14 @@ class Navigation(
         transaction.commitAllowingStateLoss()
     }
 
-    private fun showTopFragmentInStack(rootTag: String, animate: Boolean = true) {
-        val fragment = getCurrentTopFragment(rootTag) ?: return
+    private fun showTopFragmentInStack(rootTag: String, animate: Boolean = true): BaseFragment<*>? {
+        val fragment = getCurrentTopFragment(rootTag) ?: return null
         val t = fragmentManager.beginTransaction()
         if (animate) t.animateFade()
         t.show(fragment).commitAllowingStateLoss()
-        listener.onTopFragmentChanged(getCurrentTopFragment(), currentRoot)
+        val currentTopFragment = getCurrentTopFragment()
+        listener.onTopFragmentChanged(currentTopFragment, currentRoot)
+        return currentTopFragment
     }
 
 
