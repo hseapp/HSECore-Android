@@ -16,24 +16,22 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
-import android.widget.EditText
+import androidx.appcompat.widget.AppCompatEditText
 import com.hse.core.R
 import com.hse.core.common.color
 import com.hse.core.common.dip
 import com.hse.core.common.dp
 
-class BorderedEditText : EditText, View.OnFocusChangeListener {
-
-    constructor(
-        context: Context?,
-        attrs: AttributeSet?
-    ) : super(context, attrs, android.R.attr.editTextStyle)
-
+class BorderedEditText @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : AppCompatEditText(context, attrs, android.R.attr.editTextStyle), View.OnFocusChangeListener {
 
     var title: String? = null
         set(value) {
             field = value
-            titleWidth = textPaint.measureText(value)
+            titleWidth = if (value != null) textPaint.measureText(value) else 0f
             if (hint == null) hint = field
             invalidate()
         }
@@ -94,6 +92,8 @@ class BorderedEditText : EditText, View.OnFocusChangeListener {
         minimumHeight = dip(60f)
         onFocusChangeListener = this
         addTextChangedListener(textWatcher)
+        val a = getContext().obtainStyledAttributes(attrs, R.styleable.BorderedEditText)
+        title = a.getString(R.styleable.BorderedEditText_title)
     }
 
     override fun onDraw(canvas: Canvas?) {
