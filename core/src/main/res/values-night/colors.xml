@@ -31,7 +31,8 @@
 <!--    <color name="buttonTransparent">#30ffffff</color>-->
 <!--    <color name="buttonTransparentText">#fff</color>-->
 
-    <color name="editTextBorderNormal">@color/buttonNormal</color>
+    <color name="editTextBorderNormal">@color/navIconInactive</color>
+    <color name="editTextBorderSelected">@color/buttonNormal</color>
     <color name="editTextBorderPressed">#777</color>
 
     <color name="divider">#515151</color>
