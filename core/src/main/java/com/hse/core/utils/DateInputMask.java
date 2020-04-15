@@ -22,11 +22,17 @@ public class DateInputMask implements TextWatcher {
     private String ddmmyyyy = "ддммгггг";
     private Calendar cal = Calendar.getInstance();
     private EditText input;
+    private int minYear;
 
     public DateInputMask(EditText input) {
+        this(input, 2019);
+    }
+
+    public DateInputMask(EditText input, int minYear) {
         this.input = input;
         this.input.addTextChangedListener(this);
         this.input.setText(" ");
+        this.minYear = minYear;
     }
 
     @Override
@@ -60,7 +66,7 @@ public class DateInputMask implements TextWatcher {
 
             mon = mon < 1 ? 1 : mon > 12 ? 12 : mon;
             cal.set(Calendar.MONTH, mon - 1);
-            year = (year < 2019) ? 2019 : (year > 2040) ? 2040 : year;
+            year = (year < minYear) ? minYear : (year > 2040) ? 2040 : year;
             cal.set(Calendar.YEAR, year);
 
             day = (day > cal.getActualMaximum(Calendar.DATE)) ? cal.getActualMaximum(Calendar.DATE) : day;

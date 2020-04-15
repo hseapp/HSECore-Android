@@ -96,9 +96,9 @@ fun View.setInvisible() {
     visibility = View.INVISIBLE
 }
 
-fun View.onClick(onClick: ((View?) -> Unit)?) {
-    if (onClick == null) setOnClickListener(null)
-    else setOnClickListener(ClickListener(onClick))
+fun View?.onClick(onClick: ((View?) -> Unit)?) {
+    if (onClick == null) this?.setOnClickListener(null)
+    else this?.setOnClickListener(ClickListener(onClick))
 }
 
 private var density = 0f

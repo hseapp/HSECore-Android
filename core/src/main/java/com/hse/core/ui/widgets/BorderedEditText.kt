@@ -81,7 +81,7 @@ class BorderedEditText @JvmOverloads constructor(
     init {
         //TODO если gravity==top, ставить верный paddingTop
         setBackgroundResource(R.drawable.bordered_edit_text_selector)
-        setPadding(dip(16f), 0, dip(16f), 0)
+        setPadding(dip(16f) + paddingLeft, paddingTop, dip(16f) + paddingRight, paddingBottom)
         setTextColor(resources.getColorStateList(R.color.bordered_edit_text_text_selector))
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {

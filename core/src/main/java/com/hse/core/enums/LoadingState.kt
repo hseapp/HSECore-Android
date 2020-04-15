@@ -9,5 +9,6 @@ enum class LoadingState(var obj: Any? = null) {
     IDLE,
     LOADING,
     LOADING_MORE,
-    ERROR;
+    ERROR,
+    DONE;
 }
