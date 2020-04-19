@@ -15,22 +15,22 @@ import com.hse.core.R;
 import java.util.Calendar;
 
 import static com.hse.core.common.ExtKt.color;
+import static com.hse.core.common.ExtKt.string;
 
-public class DateInputMask implements TextWatcher {
+public class DateInputMaskTextWatcher implements TextWatcher {
 
     private CharSequence current = "";
-    private String ddmmyyyy = "ддммгггг";
+    private String ddmmyyyy = string(R.string.date_input_mask);
     private Calendar cal = Calendar.getInstance();
     private EditText input;
     private int minYear;
 
-    public DateInputMask(EditText input) {
+    public DateInputMaskTextWatcher(EditText input) {
         this(input, 2019);
     }
 
-    public DateInputMask(EditText input, int minYear) {
+    public DateInputMaskTextWatcher(EditText input, int minYear) {
         this.input = input;
-        this.input.addTextChangedListener(this);
         this.input.setText(" ");
         this.minYear = minYear;
     }

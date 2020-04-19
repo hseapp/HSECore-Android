@@ -11,4 +11,5 @@
     <string name="retry">Повторить</string>
     <string name="empty_list">Пусто</string>
     <string name="empty_list_description">По запросу ничего не нашлось</string>
+    <string name="date_input_mask">ддммгггг</string>
 </resources>

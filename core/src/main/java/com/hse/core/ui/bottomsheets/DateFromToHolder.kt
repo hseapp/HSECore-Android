@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import com.hse.core.R
 import com.hse.core.ui.widgets.BorderedEditText
-import com.hse.core.utils.DateInputMask
+import com.hse.core.utils.DateInputMaskTextWatcher
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,8 +47,8 @@ class DateFromToHolder(parent: ViewGroup) : BaseBottomSheetHolder(
     }
 
     init {
-        DateInputMask(dateFromText)
-        DateInputMask(dateToText)
+        dateFromText.addTextChangedListener(DateInputMaskTextWatcher(dateFromText))
+        dateToText.addTextChangedListener(DateInputMaskTextWatcher(dateToText))
         dateFromText.addTextChangedListener {
             dateFrom = formatDate(it)
             checkDates()
