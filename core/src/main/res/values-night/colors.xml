@@ -7,8 +7,8 @@
 <resources>
     <color name="windowBackground">#202124</color>
     <color name="statusBar">#33000000</color>
-    <color name="navigationBar">#69000000</color>
-    <color name="bottomNavigation">#33000000</color>
+    <color name="navigationBar">#111111</color>
+    <color name="bottomNavigation">@color/navigationBar</color>
 
     <color name="textPrimary">#f1f3f4</color>
     <color name="textSecondary">#80868b</color>

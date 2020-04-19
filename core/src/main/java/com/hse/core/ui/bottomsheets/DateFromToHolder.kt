@@ -47,8 +47,8 @@ class DateFromToHolder(parent: ViewGroup) : BaseBottomSheetHolder(
     }
 
     init {
-        dateFromText.addTextChangedListener(DateInputMaskTextWatcher(dateFromText))
-        dateToText.addTextChangedListener(DateInputMaskTextWatcher(dateToText))
+        DateInputMaskTextWatcher(dateFromText)
+        DateInputMaskTextWatcher(dateToText)
         dateFromText.addTextChangedListener {
             dateFrom = formatDate(it)
             checkDates()

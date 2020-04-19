@@ -31,6 +31,7 @@ public class DateInputMaskTextWatcher implements TextWatcher {
 
     public DateInputMaskTextWatcher(EditText input, int minYear) {
         this.input = input;
+        this.input.addTextChangedListener(this);
         this.input.setText(" ");
         this.minYear = minYear;
     }
