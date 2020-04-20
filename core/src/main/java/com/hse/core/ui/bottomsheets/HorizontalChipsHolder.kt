@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.R
 import com.hse.core.common.color
 import com.hse.core.common.dip
+import com.hse.core.common.drawable
 import com.hse.core.common.onClick
 
 class HorizontalChipsHolder(parent: ViewGroup) : BaseBottomSheetHolder(
@@ -51,6 +52,7 @@ data class HorizontalChipItem(
     val title: String,
     val drawableLeft: Drawable? = null,
     val drawableRight: Drawable? = null,
+    val tintColor: Int? = null,
     var isChecked: Boolean = false,
     val isCheckable: Boolean = true,
     val isSpecial: Boolean = false,
@@ -75,16 +77,28 @@ class HorizontalChipAdapter :
         (holder as Holder).text.apply {
             text = item.title
 
-            setTextColor(
-                when {
-                    item.isSpecial -> color(R.color.blue)
-                    item.isCheckable -> if (item.isChecked) 0xffffffff.toInt() else color(R.color.textPrimary)
-                    else -> color(R.color.textPrimary)
+            val leftDrawable = item.drawableLeft?.mutate()
+
+            when {
+                item.isSpecial -> {
+                    setTextColor(color(R.color.blue))
                 }
-            )
+                item.isCheckable -> {
+                    if (item.isChecked) {
+                        setTextColor(0xffffffff.toInt())
+                        if (item.tintColor != null) leftDrawable?.setTint(0xffffffff.toInt())
+                    } else {
+                        setTextColor(color(R.color.textPrimary))
+                        if (item.tintColor != null) leftDrawable?.setTint(item.tintColor)
+                    }
+                }
+                else -> {
+                    setTextColor(color(R.color.textPrimary))
+                }
+            }
 
             setCompoundDrawablesWithIntrinsicBounds(
-                if (item.isCheckable) null else item.drawableLeft,
+                leftDrawable,
                 null,
                 item.drawableRight,
                 null
@@ -95,7 +109,9 @@ class HorizontalChipAdapter :
                 item.isChecked -> R.drawable.bottom_sheet_chip_selected
                 else -> R.drawable.bottom_sheet_chip_normal
             }
-            setBackgroundResource(background)
+            val backgroundDrawable = drawable(background)?.mutate()
+            if (item.isChecked && item.tintColor != null) backgroundDrawable?.setTint(item.tintColor)
+            setBackground(backgroundDrawable)
         }
     }
 

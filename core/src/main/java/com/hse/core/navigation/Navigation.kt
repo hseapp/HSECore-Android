@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.hse.core.R
 import com.hse.core.ui.BaseFragment
+import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_REQUEST_CODE
 import kotlinx.android.parcel.Parcelize
 
 interface NavigationCallback {
@@ -119,7 +120,9 @@ class Navigation(
         val list = getRootListOrCreate(rootTag)
         list.add(fragment)
         val t = fragmentManager.beginTransaction()
-        if (!fragment.isRootFragment) t.animateFade()
+        if (!fragment.isRootFragment) {
+            if (fragment.arguments?.getInt(ARG_REQUEST_CODE) != -1) t.animatePopUp() else t.animateFade()
+        }
         t.add(container, fragment, fragment.getFragmentTag()).commitAllowingStateLoss()
         listener.onTopFragmentChanged(getCurrentTopFragment(), currentRoot)
     }
@@ -200,6 +203,16 @@ class Navigation(
             R.animator.fragment_fade_in,
             R.animator.fragment_fade_out,
             R.animator.fragment_fade_in,
+            R.animator.fragment_fade_out
+        )
+        return this
+    }
+
+    private fun FragmentTransaction.animatePopUp(): FragmentTransaction {
+        setCustomAnimations(
+            R.animator.fragment_pop_up,
+            R.animator.fragment_fade_out,
+            R.animator.fragment_pop_up,
             R.animator.fragment_fade_out
         )
         return this

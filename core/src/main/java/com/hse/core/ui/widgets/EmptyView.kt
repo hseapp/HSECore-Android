@@ -40,7 +40,6 @@ class EmptyView @JvmOverloads constructor(
         setGone()
     }
     private val button = HseButton(context).apply {
-        setType(HseButton.Type.TRANSPARENT_WITH_BORDER)
         setGone()
     }
 
@@ -55,7 +54,7 @@ class EmptyView @JvmOverloads constructor(
         (title.layoutParams as LayoutParams).bottomMargin = dip(8f)
         addView(subtitle)
         (subtitle.layoutParams as LayoutParams).bottomMargin = dip(16f)
-        addView(button, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        addView(button, LayoutParams.WRAP_CONTENT, dip(40f))
     }
 
     fun setImage(@DrawableRes res: Int) {
@@ -73,9 +72,11 @@ class EmptyView @JvmOverloads constructor(
         subtitle.setVisible()
     }
 
-    fun setButton(text: String, action: (() -> Unit)?) {
+    fun setButton(text: String, type: HseButton.Type = HseButton.Type.TRANSPARENT_WITH_BORDER, @DrawableRes buttonIcon: Int = 0, action: (() -> Unit)?) {
         button.setVisible()
+        button.setType(type)
         button.text = text
+        button.setImage(buttonIcon, 0)
         button.onClick { action?.invoke() }
     }
 }

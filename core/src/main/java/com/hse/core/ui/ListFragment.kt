@@ -69,7 +69,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     }
 
     override fun onFragmentStackSelected(): Boolean {
-        if (adapter == null || adapter!!.isEmpty()) return true
+        if (adapter == null || adapter?.isEmpty() == true) return true
         val manager = recyclerView?.layoutManager
         if (manager is LinearLayoutManager) {
             if (manager.findFirstVisibleItemPosition() == 0) return true
@@ -123,12 +123,10 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
 
         recyclerView?.overScrollMode = View.OVER_SCROLL_NEVER
 
-        if (adapter != null) {
-            viewModel.observe(viewLifecycleOwner, Observer {
-                onDataReceived(it)
-                adapter?.submitList(it, savedInstanceState != null) { checkForEmpty() }
-            })
-        }
+        viewModel.observe(viewLifecycleOwner, Observer {
+            onDataReceived(it)
+            adapter?.submitList(it, savedInstanceState != null) { checkForEmpty() }
+        })
         swipeRefresh?.setOnRefreshListener { reload() }
         viewModel.loadingState?.observe(this, Observer { setState(it) })
 
@@ -163,7 +161,6 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         overlayViews.add(emptyView)
         mainLayout?.addView(
             emptyView,
-            0,
             CoordinatorLayout.LayoutParams(
                 CoordinatorLayout.LayoutParams.MATCH_PARENT,
                 CoordinatorLayout.LayoutParams.MATCH_PARENT

@@ -28,7 +28,7 @@ class PaginatedRecyclerView @JvmOverloads constructor(
             val adapter = getPaginatedAdapter() ?: return
             val totalItemsCount = adapter.itemCount
             val lastVisibleItemPosition = manager.findLastVisibleItemPosition()
-            if (totalItemsCount - lastVisibleItemPosition > paginationThreshold) return
+            if (totalItemsCount - lastVisibleItemPosition > paginationThreshold || totalItemsCount == 0) return
             dataSource?.loadNext()
         }
     }
