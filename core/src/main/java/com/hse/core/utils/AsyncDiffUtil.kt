@@ -40,6 +40,7 @@ class AsyncDiffUtil<T>(
             this.list = newList
             readOnlyList = Collections.unmodifiableList(newList)
             adapter.notifyDataSetChanged()
+            onSubmitted?.invoke()
         } else {
             if (newList == null || newList.isEmpty()) {
                 actor.offer(Operation.Clear)

@@ -46,7 +46,7 @@ class EmptyView @JvmOverloads constructor(
 
     init {
         orientation = VERTICAL
-        setPadding(dip(36f), dip(24f), dip(36f), dip(24f))
+        setPadding(dip(36f), dip(24f), dip(36f), 0)
         gravity = Gravity.CENTER
         addView(image, dip(120f), dip(120f))
         (image.layoutParams as LayoutParams).bottomMargin = dip(24f)
@@ -77,6 +77,9 @@ class EmptyView @JvmOverloads constructor(
         button.setType(type)
         button.text = text
         button.setImage(buttonIcon, 0)
+        if (buttonIcon != 0) {
+            button.setPadding(button.paddingLeft, 0, button.paddingRight, dip(4f))
+        }
         button.onClick { action?.invoke() }
     }
 }

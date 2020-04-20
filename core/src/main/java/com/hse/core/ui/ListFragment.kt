@@ -84,7 +84,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         viewModel.getDataSource()?.reset(false)
     }
 
-    override fun onCreateView(
+    override fun provideView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -122,14 +122,18 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         })
 
         recyclerView?.overScrollMode = View.OVER_SCROLL_NEVER
+        swipeRefresh?.setOnRefreshListener { reload() }
 
         viewModel.observe(viewLifecycleOwner, Observer {
             onDataReceived(it)
             adapter?.submitList(it, savedInstanceState != null) { checkForEmpty() }
         })
-        swipeRefresh?.setOnRefreshListener { reload() }
         viewModel.loadingState?.observe(this, Observer { setState(it) })
-
+        viewModel.listModelState.observe(this, Observer {
+            if (it != null) {
+                swipeRefresh?.isEnabled = it.canRefresh
+            }
+        })
         if (!isRootFragment) {
             setToolbarBackIcon(toolbar)
         }

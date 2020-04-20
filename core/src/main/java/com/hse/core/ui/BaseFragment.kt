@@ -41,15 +41,23 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     private var appBarOffset = 0
     private val appBarOffsetThreshold = dp(48f)
 
+    private var doOnReady: (() -> Unit)? = null
+
     abstract fun provideViewModel(): T
     abstract fun getFragmentTag(): String
+    abstract fun provideView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View?
 
     open fun createView(
         view: View,
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) {}
+    ) {
+    }
 
     open fun canFinish() = true
     open fun onFragmentStackSelected() = true
@@ -66,6 +74,19 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         this.resultData = data
     }
 
+    fun doWhenReady(task: () -> Unit) {
+        if (::viewModel.isInitialized) task()
+        else doOnReady = task
+    }
+
+    final override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return provideView(inflater, container, savedInstanceState)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = provideViewModel()
@@ -73,6 +94,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
             commonViews[it.id] = it
         }
         requestCode = arguments?.getInt(ARG_REQUEST_CODE) ?: -1
+        doOnReady?.invoke()
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
@@ -161,7 +183,11 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
             return this
         }
 
-        fun go(ctx: BaseActivity?, rootTag: String? = null, @IntRange(from = -1, to = Int.MAX_VALUE.toLong()) requestCode: Int = -1) {
+        fun go(
+            ctx: BaseActivity?,
+            rootTag: String? = null,
+            @IntRange(from = -1, to = Int.MAX_VALUE.toLong()) requestCode: Int = -1
+        ) {
             arguments.putParcelableArrayList(ARG_COMMON_VIEWS, commonViews)
             arguments.putInt(ARG_REQUEST_CODE, requestCode)
             val fragment = fragment.newInstance().apply {

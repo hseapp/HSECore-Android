@@ -52,7 +52,6 @@ abstract class PaginatedDataSource<T, J : PaginationResult<T>> {
                         JobType.CLEAR -> doClear()
                     }
                 } catch (e: Throwable) {
-                    e.printStackTrace()
                     val context = coroutineContext
                     if (e !is CancellationException) {
                         coroutineScope.launch(Dispatchers.Main) {
@@ -96,7 +95,7 @@ abstract class PaginatedDataSource<T, J : PaginationResult<T>> {
         withContext(Dispatchers.Main) {
             val value = liveData.value
             value?.clear()
-            liveData.value = value
+            liveData.value = value?: arrayListOf()
         }
         needClear = false
     }
