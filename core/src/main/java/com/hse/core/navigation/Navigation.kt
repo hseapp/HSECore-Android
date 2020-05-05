@@ -56,7 +56,7 @@ class Navigation(
             val list = entry.value
             val array = arrayOfNulls<String>(list.size)
             list.forEachIndexed { index, fragment ->
-                array[index] = fragment.getFragmentTag()
+                array[index] = fragment.computeFragmentTag()
             }
             hashMap[key] = array
         }
@@ -123,8 +123,10 @@ class Navigation(
         if (!fragment.isRootFragment) {
             if (fragment.arguments?.getInt(ARG_REQUEST_CODE) != -1) t.animatePopUp() else t.animateFade()
         }
-        t.add(container, fragment, fragment.getFragmentTag()).commitAllowingStateLoss()
-        listener.onTopFragmentChanged(getCurrentTopFragment(), currentRoot)
+        t.add(container, fragment, fragment.computeFragmentTag()).commitAllowingStateLoss()
+        val currentTopFragment = getCurrentTopFragment()
+        listener.onTopFragmentChanged(currentTopFragment, currentRoot)
+        checkStatusBar(currentTopFragment)
     }
 
     private fun getRootListOrCreate(rootTag: String): ArrayList<BaseFragment<*>> {
@@ -192,11 +194,24 @@ class Navigation(
         val t = fragmentManager.beginTransaction()
         if (animate) t.animateFade()
         t.show(fragment).commitAllowingStateLoss()
-        val currentTopFragment = getCurrentTopFragment()
-        listener.onTopFragmentChanged(currentTopFragment, currentRoot)
-        return currentTopFragment
+        listener.onTopFragmentChanged(fragment, currentRoot)
+        checkStatusBar(fragment)
+        return fragment
     }
 
+
+    private fun checkStatusBar(currentFragment: BaseFragment<*>?) {
+        if (currentFragment == null) return
+//        currentFragment.lifecycleScope.launchWhenCreated {
+//            if (currentFragment.hasTransparentStatusBar) {
+//                currentFragment.activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+////                activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+//            } else {
+//                currentFragment.activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+////                currentFragment.activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+//            }
+//        }
+    }
 
     private fun FragmentTransaction.animateFade(): FragmentTransaction {
         setCustomAnimations(

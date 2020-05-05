@@ -10,13 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.appbar.AppBarLayout
 import com.hse.core.R
 import com.hse.core.adapters.PaginatedRecyclerAdapter
 import com.hse.core.common.*
@@ -31,9 +29,6 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     var recyclerView: PaginatedRecyclerView? = null
     var swipeRefresh: SwipeRefreshLayout? = null
     var progressBar: ProgressBar? = null
-    var mainLayout: ViewGroup? = null
-    var toolbar: Toolbar? = null
-    var appBarLayout: AppBarLayout? = null
 
     private val overlayViews = Collections.synchronizedList(ArrayList<View>())
     private var currentState = LoadingState.IDLE

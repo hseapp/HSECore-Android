@@ -25,12 +25,14 @@ import com.hse.core.common.dp
 import com.hse.core.navigation.CommonViewParamHolder
 import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_COMMON_VIEWS
 import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_REQUEST_CODE
+import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_RNDM_KEY
 import com.hse.core.viewmodels.BaseViewModel
 
 
 abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     open var flags = 0
     var isRootFragment = false
+    open val hasTransparentStatusBar = false
     val commonViews = HashMap<Int, CommonViewParamHolder>()
     lateinit var viewModel: T
 
@@ -42,6 +44,10 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     private val appBarOffsetThreshold = dp(48f)
 
     private var doOnReady: (() -> Unit)? = null
+
+    var mainLayout: ViewGroup? = null
+    var toolbar: Toolbar? = null
+    var appBarLayout: AppBarLayout? = null
 
     abstract fun provideViewModel(): T
     abstract fun getFragmentTag(): String
@@ -62,6 +68,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     open fun canFinish() = true
     open fun onFragmentStackSelected() = true
 
+    internal fun computeFragmentTag() = getFragmentTag() + arguments?.getInt(ARG_RNDM_KEY)
     private var postponedFinish = false
 
     fun finish() {
@@ -84,7 +91,14 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return provideView(inflater, container, savedInstanceState)
+        val view = provideView(inflater, container, savedInstanceState)
+//        if (hasTransparentStatusBar) {
+//            view?.setOnApplyWindowInsetsListener { v, insets ->
+//                (toolbar?.layoutParams as? ViewGroup.MarginLayoutParams)?.topMargin = insets.systemWindowInsetTop
+//                insets
+//            }
+//        }
+        return view
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -188,6 +202,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
             rootTag: String? = null,
             @IntRange(from = -1, to = Int.MAX_VALUE.toLong()) requestCode: Int = -1
         ) {
+            arguments.putInt(ARG_RNDM_KEY, (0..Integer.MAX_VALUE).random())
             arguments.putParcelableArrayList(ARG_COMMON_VIEWS, commonViews)
             arguments.putInt(ARG_REQUEST_CODE, requestCode)
             val fragment = fragment.newInstance().apply {
@@ -198,6 +213,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         }
 
         companion object {
+            const val ARG_RNDM_KEY = "rndm_key"
             const val ARG_COMMON_VIEWS = "common_views"
             const val ARG_REQUEST_CODE = "request_code"
         }
