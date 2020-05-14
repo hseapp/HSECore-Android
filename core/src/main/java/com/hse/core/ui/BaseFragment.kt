@@ -67,6 +67,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
 
     open fun canFinish() = true
     open fun onFragmentStackSelected() = true
+    open fun onNewIntent(intent: Intent?) {}
 
     internal fun computeFragmentTag() = getFragmentTag() + arguments?.getInt(ARG_RNDM_KEY)
     private var postponedFinish = false

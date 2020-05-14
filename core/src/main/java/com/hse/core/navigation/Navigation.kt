@@ -157,7 +157,7 @@ class Navigation(
         }
     }
 
-    private fun dropStack(rootTag: String) {
+    fun dropStack(rootTag: String = currentRoot) {
         val list = getRootListOrCreate(rootTag)
         val transaction = fragmentManager.beginTransaction()
         val rootFragment = list[0]

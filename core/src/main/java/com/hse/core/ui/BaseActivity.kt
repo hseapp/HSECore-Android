@@ -38,6 +38,11 @@ open class BaseActivity : AppCompatActivity() {
         keyboardListener.clean()
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navigation?.getCurrentTopFragment()?.onNewIntent(intent)
+    }
+
     override fun onBackPressed() {
         if (navigation?.onBackPressed() == false) super.onBackPressed()
     }
