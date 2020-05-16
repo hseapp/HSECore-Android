@@ -220,6 +220,40 @@ fun <T> List<T>.lastSafe(): T? {
     return get(size - 1)
 }
 
+fun isAppVisible() = BaseApplication.visibleActivitiesCount > 0
+
+fun Any.doOnAppResumed(action: () -> Unit) {
+    if (isAppVisible()) action()
+    else {
+        val hash = this.hashCode()
+        BaseApplication.addLifecycleObserver(hash, object : BaseApplication.Companion.LifecycleObserver {
+            override fun onAppResumed() {
+                action()
+                BaseApplication.removeLifecycleObserver(hash)
+            }
+
+            override fun onAppPaused() {
+            }
+        })
+    }
+}
+
+fun Any.doOnAppPaused(action: () -> Unit) {
+    if (!isAppVisible()) action()
+    else {
+        val hash = this.hashCode()
+        BaseApplication.addLifecycleObserver(hash, object : BaseApplication.Companion.LifecycleObserver {
+            override fun onAppResumed() {
+            }
+
+            override fun onAppPaused() {
+                action()
+                BaseApplication.removeLifecycleObserver(hash)
+            }
+        })
+    }
+}
+
 //operator fun Int.minus(i: Int?): Int {
 //    return i?.minus(this) ?: this
 //}

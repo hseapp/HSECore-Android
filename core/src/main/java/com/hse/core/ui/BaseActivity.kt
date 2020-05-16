@@ -47,6 +47,16 @@ open class BaseActivity : AppCompatActivity() {
         if (navigation?.onBackPressed() == false) super.onBackPressed()
     }
 
+    override fun onResume() {
+        super.onResume()
+        BaseApplication.onActivityResumed()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        BaseApplication.onActivityPaused()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         navigation?.getCurrentTopFragment()?.onActivityResult(requestCode, resultCode, data)

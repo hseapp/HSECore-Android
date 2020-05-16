@@ -24,6 +24,7 @@ abstract class PaginatedRecyclerAdapter<T>(
     private var isLoading = false
     private var canRestoreState = true
     var recyclerView: RecyclerView? = null
+        private set
 
     fun submitList(
         list: List<T>?,

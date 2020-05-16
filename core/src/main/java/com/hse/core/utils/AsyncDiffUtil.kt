@@ -6,8 +6,10 @@
 package com.hse.core.utils
 
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
+import com.hse.core.adapters.PaginatedRecyclerAdapter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel.Factory.CONFLATED
 import kotlinx.coroutines.channels.actor
@@ -135,6 +137,11 @@ class AsyncDiffUtil<T>(
         }
 
         override fun onInserted(position: Int, count: Int) {
+            if (adapter is PaginatedRecyclerAdapter<*>) {
+                if (((adapter.recyclerView?.layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition()?:0) <= 2) {
+                    adapter.recyclerView?.smoothScrollToPosition(0)
+                }
+            }
             adapter.notifyItemRangeInserted(position, count)
         }
 
