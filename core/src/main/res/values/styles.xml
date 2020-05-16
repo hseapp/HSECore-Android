@@ -40,6 +40,11 @@
         <item name="android:background">@color/windowBackground</item>
         <item name="android:fontFamily">@font/futuramedium</item>
         <item name="fontFamily">@font/futuramedium</item>
+        <item name="actionOverflowButtonStyle">@style/App.ThemeOverlay.ActionButton.Overflow</item>
+    </style>
+    
+    <style name="App.ThemeOverlay.ActionButton.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_more_vert_gray_action</item>
     </style>
 
     <style name="App.ThemeOverlay.Toolbar.Title" parent="ThemeOverlay.AppCompat.ActionBar">

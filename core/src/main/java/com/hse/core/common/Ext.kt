@@ -164,10 +164,11 @@ fun string(@StringRes res: Int) = BaseApplication.appContext.getString(res)
 fun drawable(@DrawableRes res: Int) =
     if (res == 0) null else BaseApplication.appContext.getDrawable(res)
 
-fun openBrowser(context: Context, url: String?) {
+fun openBrowser(context: Context, url: String?, internal: Boolean = false) {
     try {
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse(url)
+        if (internal) i.`package` = context.packageName
         context.startActivity(i)
     } catch (e: Exception) {
         e.printStackTrace()
