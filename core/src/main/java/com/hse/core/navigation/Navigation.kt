@@ -27,7 +27,8 @@ class Navigation(
     private val fragmentManager: FragmentManager,
     private val listener: NavigationCallback
 ) {
-    private var currentRoot: String = "DEFAULT"
+    var currentRoot: String = "DEFAULT"
+        private set
     private var fragmentsMap = HashMap<String, ArrayList<BaseFragment<*>>>()
 
     init {
