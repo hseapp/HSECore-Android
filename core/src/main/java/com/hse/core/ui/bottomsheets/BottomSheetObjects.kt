@@ -10,6 +10,7 @@ import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_HORIZONTAL_CHIPS
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_RANGE_PICKER
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_CHECKBOX
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_ITEM
+import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_SWITCH
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_TITLED_ITEM
 import java.util.*
 
@@ -20,6 +21,7 @@ object BottomSheetHolders {
     const val TYPE_DATE_FROM_TO = 4
     const val TYPE_SIMPLE_CHECKBOX = 5
     const val TYPE_SIMPLE_ITEM = 6
+    const val TYPE_SIMPLE_SWITCH = 7
 }
 
 sealed class Item(val type: Int, var tag: String? = null) {
@@ -75,6 +77,12 @@ sealed class Item(val type: Int, var tag: String? = null) {
         var selected: Boolean,
         val listener: (SimpleCheckbox, Int, Boolean) -> Unit
     ) : Item(TYPE_SIMPLE_CHECKBOX)
+
+    data class SimpleSwitch(
+        val text: String,
+        var selected: Boolean,
+        val listener: (SimpleSwitch, Int, Boolean) -> Unit
+    ) : Item(TYPE_SIMPLE_SWITCH)
 
     data class SimpleItem(
         val text: String?

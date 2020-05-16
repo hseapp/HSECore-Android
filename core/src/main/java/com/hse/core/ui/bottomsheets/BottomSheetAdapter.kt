@@ -14,6 +14,7 @@ import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_HORIZONTAL_CHIPS
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_RANGE_PICKER
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_CHECKBOX
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_ITEM
+import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_SWITCH
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_TITLED_ITEM
 import com.innovattic.rangeseekbar.RangeSeekBar
 
@@ -29,6 +30,7 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             TYPE_DATE_FROM_TO -> DateFromToHolder(parent)
             TYPE_SIMPLE_CHECKBOX -> SimpleCheckboxHolder(parent)
             TYPE_SIMPLE_ITEM -> SimpleItemHolder(parent)
+            TYPE_SIMPLE_SWITCH -> SimpleSwitchHolder(parent)
             else -> throw Exception("No view found")
         }
     }
@@ -105,6 +107,16 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             is SimpleItemHolder -> {
                 val item = data[position] as? Item.SimpleItem ?: return
                 holder.text.text = item.text
+            }
+            is SimpleSwitchHolder -> {
+                val item = data[position] as? Item.SimpleSwitch ?: return
+                holder.switch.text = item.text
+                holder.switch.setOnCheckedChangeListener(null)
+                holder.switch.isChecked = item.selected
+                holder.switch.setOnCheckedChangeListener { view, isChecked ->
+                    item.selected = isChecked
+                    item.listener(item, position, isChecked)
+                }
             }
         }
     }
