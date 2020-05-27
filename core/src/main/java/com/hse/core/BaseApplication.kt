@@ -20,7 +20,6 @@ abstract class BaseApplication : Application() {
         lateinit var appComponent: BaseAppComponent
         lateinit var appContext: Context
         private val lifecycleObservers = ConcurrentHashMap<Int, LifecycleObserver>()
-
         internal var visibleActivitiesCount = 0
 
         internal fun onActivityResumed() {
@@ -37,12 +36,10 @@ abstract class BaseApplication : Application() {
             }
         }
 
-        @Synchronized
         internal fun addLifecycleObserver(hash: Int, observer: LifecycleObserver) {
             lifecycleObservers[hash] = observer
         }
 
-        @Synchronized
         internal fun removeLifecycleObserver(hash: Int) {
             lifecycleObservers.remove(hash)
         }
