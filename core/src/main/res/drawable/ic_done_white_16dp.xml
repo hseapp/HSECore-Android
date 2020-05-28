@@ -1,0 +1,14 @@
+<!--
+  ~ Copyright (c) 2020 National Research University Higher School of Economics
+  ~ All Rights Reserved.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="16dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M5.8617,10.5817L3.5483,8.2683C3.4238,8.1435 3.2547,8.0733 3.0783,8.0733C2.902,8.0733 2.7329,8.1435 2.6083,8.2683C2.3483,8.5283 2.3483,8.9483 2.6083,9.2083L5.395,11.995C5.655,12.255 6.075,12.255 6.335,11.995L13.3883,4.9417C13.6483,4.6817 13.6483,4.2617 13.3883,4.0017C13.2638,3.8768 13.0947,3.8067 12.9183,3.8067C12.742,3.8067 12.5729,3.8768 12.4483,4.0017L5.8617,10.5817Z" />
+</vector>

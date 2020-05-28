@@ -8,5 +8,5 @@
     android:shape="rectangle">
     <corners android:radius="4dp"/>
     <solid
-        android:color="@color/searchBarBackground"/>
+        android:color="@color/chipColor"/>
 </shape>

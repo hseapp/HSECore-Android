@@ -31,7 +31,9 @@ import com.hse.core.BaseApplication
 import com.hse.core.ui.BaseActivity
 import com.hse.core.ui.BaseFragment
 import com.hse.core.utils.ClickListener
+import java.text.DateFormat
 import java.text.DecimalFormat
+import java.util.*
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
@@ -251,6 +253,14 @@ fun Any.doOnAppPaused(action: () -> Unit) {
                 BaseApplication.removeLifecycleObserver(hash)
             }
         })
+    }
+}
+
+fun DateFormat.parseOrDefault(src: String?): Date? {
+    return try {
+        parse(src)
+    } catch (e: java.lang.Exception) {
+        Date()
     }
 }
 

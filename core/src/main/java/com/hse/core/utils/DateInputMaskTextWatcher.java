@@ -43,6 +43,10 @@ public class DateInputMaskTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
         if (s.toString().equals(current)) {
             return;
         }
@@ -85,10 +89,5 @@ public class DateInputMaskTextWatcher implements TextWatcher {
         input.setText(current);
         input.getText().setSpan(new ForegroundColorSpan(color(R.color.textHint)), sel, input.getText().length(), 0);
         input.setSelection(sel);
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
     }
 }
