@@ -24,8 +24,8 @@ import com.hse.core.common.animateTranslationZ
 import com.hse.core.common.dp
 import com.hse.core.navigation.CommonViewParamHolder
 import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_COMMON_VIEWS
+import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_RANDOM_KEY
 import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_REQUEST_CODE
-import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_RNDM_KEY
 import com.hse.core.viewmodels.BaseViewModel
 
 
@@ -68,8 +68,9 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     open fun canFinish() = true
     open fun onFragmentStackSelected() = true
     open fun onNewIntent(intent: Intent?) {}
+    open fun onFilePicked(intent: Intent?) {}
 
-    internal fun computeFragmentTag() = getFragmentTag() + arguments?.getInt(ARG_RNDM_KEY)
+    internal fun computeFragmentTag() = getFragmentTag() + arguments?.getInt(ARG_RANDOM_KEY)
     private var postponedFinish = false
 
     fun finish() {
@@ -117,6 +118,13 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         if (!hidden && postponedFinish) activity()?.onBackPressed()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_PICK_FILE && resultCode == Activity.RESULT_OK) {
+            onFilePicked(data)
+        }
+    }
+
     fun enableAppBarShadowHandling(
         recyclerView: RecyclerView?,
         appBarLayout: AppBarLayout?
@@ -134,6 +142,13 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
                 checkAppBarShadow(appBarLayout, layoutManager as? LinearLayoutManager)
             }
         })
+    }
+
+    fun pickFile(type: String = "*/*") {
+        val mediaIntent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        mediaIntent.addCategory(Intent.CATEGORY_OPENABLE)
+        mediaIntent.type = type
+        activity?.startActivityForResult(mediaIntent, REQUEST_CODE_PICK_FILE)
     }
 
     private var isAppBarAnimating = false
@@ -203,7 +218,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
             rootTag: String? = null,
             @IntRange(from = -1, to = Int.MAX_VALUE.toLong()) requestCode: Int = -1
         ) {
-            arguments.putInt(ARG_RNDM_KEY, (0..Integer.MAX_VALUE).random())
+            arguments.putInt(ARG_RANDOM_KEY, (0..Integer.MAX_VALUE).random())
             arguments.putParcelableArrayList(ARG_COMMON_VIEWS, commonViews)
             arguments.putInt(ARG_REQUEST_CODE, requestCode)
             val fragment = fragment.newInstance().apply {
@@ -214,10 +229,14 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         }
 
         companion object {
-            const val ARG_RNDM_KEY = "rndm_key"
+            const val ARG_RANDOM_KEY = "random_key"
             const val ARG_COMMON_VIEWS = "common_views"
             const val ARG_REQUEST_CODE = "request_code"
         }
+    }
+
+    companion object {
+        const val REQUEST_CODE_PICK_FILE = 2142
     }
 }
 
