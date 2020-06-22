@@ -8,6 +8,7 @@ package com.hse.core.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.R
@@ -66,6 +67,7 @@ abstract class PaginatedRecyclerAdapter<T>(
 
     fun getRealItemCount(): Int = asyncDiffUtil.expectedListSize()
 
+    @CallSuper
     override fun getItemViewType(position: Int): Int {
         if (isLoading && position == itemCount - 1) {
             return ITEM_TYPE_FOOTER

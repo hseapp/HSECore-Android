@@ -61,5 +61,5 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:2.24"
     implementation 'com.github.Innovattic:range-seek-bar:v1.0.6'
     kapt "com.google.dagger:dagger-android-processor:2.20"
-    kapt "com.google.dagger:dagger-compiler:2.23.2"
+    kapt "com.google.dagger:dagger-compiler:2.24"
 }

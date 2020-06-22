@@ -23,6 +23,7 @@
     <color name="navIconInactive">#C4C8CC</color>
 
     <color name="chipColor">#80EBEDF0</color>
+    <color name="chipColorRed">#20e57373</color>
 
     <color name="searchBarBackground">#EBEDF0</color>
     <color name="searchBarInlineIcon">#818C99</color>
