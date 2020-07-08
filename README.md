@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://hse.ru/web">
-    <img width="200px" src="https://s3.hseapp.ru/media/hsecore/hse-digital-logo-light/image-1582238921120.svg">
+    <img width="200px" src="https://hse-media.hb.bizmrg.com/hsecore/hse-digital-logo-light/image-1582238921120.svg">
   </a>
 </p>
 
@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://vk.com/hseapp">
-    <img width="500px" src="https://s3.hseapp.ru/media/hsecore/promo_1/image-1582238717260.png">
+    <img width="500px" src="https://hse-media.hb.bizmrg.com/hsecore/promo_1/image-1582238717260.png">
   </a>
 </p>
 
