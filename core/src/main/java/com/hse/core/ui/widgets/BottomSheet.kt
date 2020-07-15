@@ -7,16 +7,15 @@ package com.hse.core.ui.widgets
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Point
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -50,8 +49,8 @@ abstract class BottomSheet(val context: Context) {
 
     fun show() {
         val bottomView = getBottomView()
-
         val dialogView = getDecoratedView()
+
         dialog = SheetDialog(context, R.style.BottomSheet)
         dialog?.setContentView(dialogView)
         dialog?.setOnDismissListener { onDismiss() }
@@ -88,7 +87,6 @@ abstract class BottomSheet(val context: Context) {
                 dialogView.setPadding(0, 0, 0, bottomView.height)
             }
         }
-
     }
 
     fun dismiss() {
@@ -112,20 +110,26 @@ abstract class BottomSheet(val context: Context) {
 
         @RequiresApi(api = Build.VERSION_CODES.M)
         private fun setWhiteNavigationBar(dialog: Dialog) {
-            dialog.window?.apply {
-                val metrics = DisplayMetrics()
-                windowManager.defaultDisplay.getMetrics(metrics)
-                val dimDrawable = GradientDrawable()
-                val navigationBarDrawable = GradientDrawable().apply {
-                    shape = GradientDrawable.RECTANGLE
-                    setColor(color(R.color.windowBackground))
+            val content = findViewById<View>(android.R.id.content)
+            content?.setOnApplyWindowInsetsListener { v, insets ->
+                dialog.window?.apply {
+                    val point = Point()
+                    windowManager.defaultDisplay.getSize(point)
+                    val dimDrawable = GradientDrawable()
+                    val navigationBarDrawable = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        setColor(color(R.color.windowBackground))
+                    }
+                    val layers = arrayOf<Drawable>(dimDrawable, navigationBarDrawable)
+                    val windowBackground = LayerDrawable(layers).apply {
+                        setLayerInsetTop(1, point.y - insets.systemWindowInsetBottom)
+                    }
+                    setBackgroundDrawable(windowBackground)
                 }
-                val layers = arrayOf<Drawable>(dimDrawable, navigationBarDrawable)
-                val windowBackground = LayerDrawable(layers).apply {
-                    setLayerInsetTop(1, metrics.heightPixels)
-                }
-                setBackgroundDrawable(windowBackground)
+                insets
             }
+
+
         }
     }
 }
