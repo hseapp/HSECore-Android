@@ -5,6 +5,8 @@
   -->
 
 <resources>
+    <attr name="title" format="string"/>
+
     <declare-styleable name="HseButton">
         <attr name="type" format="enum">
             <enum name="BLUE" value="0"/>
@@ -14,6 +16,9 @@
         <attr name="icon" format="reference"/>
     </declare-styleable>
     <declare-styleable name="BorderedEditText">
-        <attr name="title" format="string"/>
+        <attr name="title"/>
+    </declare-styleable>
+    <declare-styleable name="BorderedTextView">
+        <attr name="title"/>
     </declare-styleable>
 </resources>

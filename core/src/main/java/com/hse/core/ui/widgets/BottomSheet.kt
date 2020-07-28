@@ -8,14 +8,15 @@ package com.hse.core.ui.widgets
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
-import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -35,15 +36,16 @@ abstract class BottomSheet(val context: Context) {
     protected var dialog: SheetDialog? = null
         private set
 
-    protected var defaultState = -1
-    protected var peekHeight = dip(600f)
+    protected var isHidable = true
+    protected var defaultState = BottomSheetBehavior.STATE_EXPANDED
+    protected var peekHeight = dip(100f)
     protected var bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
         }
 
         override fun onStateChanged(bottomSheet: View, newState: Int) {
-            if (newState == BottomSheetBehavior.STATE_COLLAPSED) dismiss()
+            if (newState == BottomSheetBehavior.STATE_HIDDEN) dismiss()
         }
     }
 
@@ -60,17 +62,20 @@ abstract class BottomSheet(val context: Context) {
             dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.container)
 
         dialog?.setOnShowListener {
-            if (it is BottomSheetDialog) {
-                BottomSheetBehavior.from(it.findViewById<ViewGroup>(com.google.android.material.R.id.design_bottom_sheet)!!)
-                    .apply {
-                        peekHeight = this@BottomSheet.peekHeight
-                        isHideable = false //this@BottomSheet.isHidable
-                        if (defaultState >= 0) state = defaultState
-                        setBottomSheetCallback(bottomSheetCallback)
-                    }
+            // dirty hack
+            dialogView.post {
+                if (it is BottomSheetDialog) {
+                    BottomSheetBehavior.from(it.findViewById<ViewGroup>(com.google.android.material.R.id.design_bottom_sheet)!!)
+                        .apply {
+                            peekHeight = this@BottomSheet.peekHeight
+                            isHideable = this@BottomSheet.isHidable
+                            if (defaultState >= 0) state = defaultState
+                            setBottomSheetCallback(bottomSheetCallback)
+                        }
+                }
             }
-        }
 
+        }
         dialog?.show()
 
         if (bottomView != null) {
