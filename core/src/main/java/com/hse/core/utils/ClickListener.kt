@@ -18,7 +18,7 @@ class ClickListener(val onClick: (View?) -> Unit) : View.OnClickListener {
     }
 
     companion object {
-        var lastClickTime = 0L
-        const val THRESHOLD = 200
+        private var lastClickTime = 0L
+        private const val THRESHOLD = 200
     }
 }

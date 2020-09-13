@@ -6,6 +6,7 @@
 package com.hse.core.ui.bottomsheets
 
 import android.view.ViewGroup
+import android.widget.SeekBar
 import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.R
 import com.hse.core.common.onClick
@@ -16,6 +17,7 @@ import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_CHECKBOX
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_ITEM
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_SWITCH
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_TITLED_ITEM
+import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SLIDER
 import com.innovattic.rangeseekbar.RangeSeekBar
 
 open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -31,6 +33,7 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             TYPE_SIMPLE_CHECKBOX -> SimpleCheckboxHolder(parent)
             TYPE_SIMPLE_ITEM -> SimpleItemHolder(parent)
             TYPE_SIMPLE_SWITCH -> SimpleSwitchHolder(parent)
+            TYPE_SLIDER -> SliderHolder(parent)
             else -> throw Exception("No view found")
         }
     }
@@ -116,6 +119,46 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 holder.switch.setOnCheckedChangeListener { view, isChecked ->
                     item.selected = isChecked
                     item.listener(item, position, isChecked)
+                }
+            }
+            is SliderHolder -> {
+                val item = data[position] as? Item.Slider ?: return
+                holder.title.text = item.title
+                holder.slider.apply {
+                    max = item.max
+                    progress = item.currentMax
+                    holder.range.text = String.format(
+                        item.rangeText,
+                        item.currentMax
+                    )
+
+                    setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                        override fun onProgressChanged(
+                            seekBar: SeekBar?,
+                            progress: Int,
+                            fromUser: Boolean
+                        ) {
+                            if (fromUser) {
+                                item.listener.invoke(
+                                    item,
+                                    position,
+                                    progress
+                                )
+                                holder.range.text = String.format(
+                                    item.rangeText,
+                                    progress
+                                )
+                            }
+                        }
+
+                        override fun onStartTrackingTouch(seekBar: SeekBar?) {
+
+                        }
+
+                        override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+                        }
+                    })
                 }
             }
         }

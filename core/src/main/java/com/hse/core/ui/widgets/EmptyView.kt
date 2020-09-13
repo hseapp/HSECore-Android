@@ -16,6 +16,7 @@ import androidx.annotation.DrawableRes
 import com.hse.core.R
 import com.hse.core.common.*
 import com.hse.core.utils.Fonts
+import java.time.Instant
 
 class EmptyView @JvmOverloads constructor(
     context: Context,
@@ -48,7 +49,7 @@ class EmptyView @JvmOverloads constructor(
         orientation = VERTICAL
         setPadding(dip(36f), dip(24f), dip(36f), 0)
         gravity = Gravity.CENTER
-        addView(image, dip(120f), dip(120f))
+        addView(image, dip(160f), dip(120f))
         (image.layoutParams as LayoutParams).bottomMargin = dip(24f)
         addView(title)
         (title.layoutParams as LayoutParams).bottomMargin = dip(8f)

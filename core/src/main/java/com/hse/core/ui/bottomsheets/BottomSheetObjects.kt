@@ -12,6 +12,7 @@ import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_CHECKBOX
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_ITEM
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_SWITCH
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_TITLED_ITEM
+import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SLIDER
 import java.util.*
 
 object BottomSheetHolders {
@@ -22,6 +23,7 @@ object BottomSheetHolders {
     const val TYPE_SIMPLE_CHECKBOX = 5
     const val TYPE_SIMPLE_ITEM = 6
     const val TYPE_SIMPLE_SWITCH = 7
+    const val TYPE_SLIDER = 8
 }
 
 sealed class Item(val type: Int, var tag: String? = null) {
@@ -63,6 +65,14 @@ sealed class Item(val type: Int, var tag: String? = null) {
         val rangeText: String,
         val listener: (RangePicker, Int, Int, Int) -> Unit
     ) : Item(TYPE_RANGE_PICKER)
+
+    data class Slider(
+        val title: String,
+        val max: Int,
+        val currentMax: Int,
+        val rangeText: String,
+        val listener: (Slider, Int, Int) -> Unit
+    ) : Item(TYPE_SLIDER)
 
     data class DateFromTo(
         val titleFrom: String,
