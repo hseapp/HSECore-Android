@@ -12,4 +12,10 @@
     <string name="empty_list">Пусто</string>
     <string name="empty_list_description">По запросу ничего не нашлось</string>
     <string name="date_input_mask">ддммгггг</string>
+    <string name="from_current_time">Любая дата</string>
+    <string name="to_current_time">По настоящее время</string>
+    <string name="set_to_default_question">Сбросить дату?</string>
+    <string name="yes">Да</string>
+    <string name="drop_date">Сбросить дату</string>
+    <string name="select_new_date">Выбрать дату</string>
 </resources>

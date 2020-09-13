@@ -91,8 +91,8 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             }
             is DateFromToHolder -> {
                 val item = data[position] as? Item.DateFromTo ?: return
-                holder.dateFromText.title = item.titleFrom
-                holder.dateToText.title = item.titleTo
+                holder.dateFromTitle.text = item.titleFrom
+                holder.dateToTitle.text = item.titleTo
                 holder.listener = item.listener
                 holder.setDateFrom(item.currentTimeFrom)
                 holder.setDateTo(item.currentTimeTo)
