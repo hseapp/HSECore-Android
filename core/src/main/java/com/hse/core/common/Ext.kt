@@ -163,8 +163,7 @@ fun View.animateTranslationZ(
 
 fun color(@ColorRes res: Int) = ContextCompat.getColor(BaseApplication.appContext, res)
 fun string(@StringRes res: Int) = BaseApplication.appContext.getString(res)
-fun drawable(@DrawableRes res: Int) =
-    if (res == 0) null else BaseApplication.appContext.getDrawable(res)
+fun drawable(@DrawableRes res: Int) = if (res == 0) null else BaseApplication.appContext.getDrawable(res)
 
 fun openBrowser(context: Context, url: String?, internal: Boolean = false) {
     try {
@@ -261,6 +260,21 @@ fun DateFormat.parseOrDefault(src: String?): Date? {
         parse(src)
     } catch (e: java.lang.Exception) {
         Date()
+    }
+}
+
+fun downloadFile(url: String, fileName: String? = UUID.randomUUID().toString(), title: String? = fileName, description: String? = fileName) {
+    try {
+        val uri = Uri.parse(url)
+        val request = DownloadManager.Request(uri)
+        request.setDescription(description)
+        request.setTitle(title)
+        request.allowScanningByMediaScanner()
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+        (BaseApplication.appContext.getSystemService(Context.DOWNLOAD_SERVICE) as? DownloadManager)?.enqueue(request)
+    } catch (e: java.lang.Exception) {
+        e.printStackTrace()
     }
 }
 
