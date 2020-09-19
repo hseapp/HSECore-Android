@@ -9,6 +9,7 @@
     <color name="statusBar">#F5F5F5</color>
     <color name="navigationBar">@color/windowBackground</color>
     <color name="bottomNavigation">@color/windowBackground</color>
+    <color name="floatingButton">#fff</color>
 
     <color name="textPrimary">#000000</color>
     <color name="textSecondary">#909499</color>
