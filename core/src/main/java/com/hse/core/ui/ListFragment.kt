@@ -119,12 +119,12 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         recyclerView?.overScrollMode = View.OVER_SCROLL_NEVER
         swipeRefresh?.setOnRefreshListener { reload() }
 
-        viewModel.getDataSource()?.observe(viewLifecycleOwner, Observer {
+        viewModel.getDataSource()?.observe(viewLifecycleOwner, {
             onDataReceived(it)
             adapter?.submitList(it, savedInstanceState != null) { checkForEmpty() }
         })
-        viewModel.loadingState?.observe(this, Observer { setState(it) })
-        viewModel.listModelState.observe(this, Observer {
+        viewModel.loadingState?.observe(this, { setState(it) })
+        viewModel.listModelState.observe(this, {
             if (it != null) {
                 swipeRefresh?.isEnabled = it.canRefresh
             }
@@ -191,33 +191,33 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         when (state) {
             LoadingState.IDLE -> {
                 swipeRefresh?.isRefreshing = false
-                recyclerView?.fadeIn()
-                progressBar?.fadeOut()
+                recyclerView?.setVisible()
+                progressBar?.setGone()
                 adapter?.setIsLoading(false)
             }
             LoadingState.LOADING -> {
                 removeAllOverlays()
                 if (adapter?.getRealItemCount() == 0 || state.obj == true) { //forceMainProgressBar
-                    recyclerView?.fadeOut()
-                    progressBar?.fadeIn()
+                    recyclerView?.setInvisible()
+                    progressBar?.setVisible()
                     swipeRefresh?.isRefreshing = false
                     swipeRefresh?.isEnabled = false
                 } else {
-                    progressBar?.fadeOut()
+                    progressBar?.setGone()
                     swipeRefresh?.isRefreshing = true
-                    recyclerView?.fadeIn()
+                    recyclerView?.setVisible()
                 }
                 adapter?.setIsLoading(false)
             }
             LoadingState.LOADING_MORE -> {
                 swipeRefresh?.isRefreshing = false
-                progressBar?.fadeOut()
-                recyclerView?.fadeIn()
+                progressBar?.setGone()
+                recyclerView?.setVisible()
                 adapter?.setIsLoading(true)
             }
             LoadingState.ERROR -> {
                 swipeRefresh?.isRefreshing = false
-                progressBar?.fadeOut()
+                progressBar?.setGone()
                 adapter?.setIsLoading(false)
                 showErrorView(state.obj as? Throwable)
             }

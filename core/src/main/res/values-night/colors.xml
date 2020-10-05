@@ -37,6 +37,7 @@
     <color name="editTextBorderPressed">#777</color>
 
     <color name="divider">#515151</color>
+    <color name="big_divider">#515151</color>
 
     <color name="blue">#4285f4</color>
 </resources>

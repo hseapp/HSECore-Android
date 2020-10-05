@@ -50,7 +50,7 @@ class EmptyView @JvmOverloads constructor(
         setPadding(dip(36f), dip(24f), dip(36f), 0)
         gravity = Gravity.CENTER
         addView(image, dip(160f), dip(120f))
-        (image.layoutParams as LayoutParams).bottomMargin = dip(24f)
+        (image.layoutParams as LayoutParams).bottomMargin = dip(16f)
         addView(title)
         (title.layoutParams as LayoutParams).bottomMargin = dip(8f)
         addView(subtitle)
@@ -68,9 +68,11 @@ class EmptyView @JvmOverloads constructor(
         title.setVisible()
     }
 
-    fun setSubtitle(string: String) {
-        subtitle.text = string
-        subtitle.setVisible()
+    fun setSubtitle(string: String?) {
+        if (string != null) {
+            subtitle.text = string
+            subtitle.setVisible()
+        } else subtitle.setGone()
     }
 
     fun setButton(text: String, type: HseButton.Type = HseButton.Type.TRANSPARENT_WITH_BORDER, @DrawableRes buttonIcon: Int = 0, action: (() -> Unit)?) {

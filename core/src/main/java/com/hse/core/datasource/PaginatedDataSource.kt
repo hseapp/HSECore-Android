@@ -16,6 +16,7 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.channels.actor
 import kotlinx.coroutines.channels.consumeEach
+import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class PaginatedDataSource<T, J : PaginationResult<T>> {
     private lateinit var coroutineScope: CoroutineScope

@@ -8,7 +8,6 @@ package com.hse.core.utils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListUpdateCallback
-import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.adapters.PaginatedRecyclerAdapter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel.Factory.CONFLATED
@@ -18,8 +17,8 @@ import java.util.*
 
 class AsyncDiffUtil<T>(
     private val itemCallback: DiffUtil.ItemCallback<T>,
-    private val adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>,
-    scope: CoroutineScope = CoroutineScope(Dispatchers.Default)
+    private val adapter: PaginatedRecyclerAdapter<*>,
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Default)
 ) {
     private val listUpdateCallback = SimpleUpdateCallback(adapter)
     private var list: List<T>? = null
@@ -29,6 +28,7 @@ class AsyncDiffUtil<T>(
 
     fun list() = readOnlyList
     fun expectedListSize() = expectedListSize
+
 
     fun submitList(
         list: List<T>?,
@@ -56,7 +56,9 @@ class AsyncDiffUtil<T>(
     @ObsoleteCoroutinesApi
     private val actor = scope.actor<Operation>(Dispatchers.Default, CONFLATED) {
         consumeEach {
-            if (!isActive) return@actor
+            if (!isActive) {
+                return@actor
+            }
             val oldList = list
             when (it) {
                 is Operation.Clear -> {
@@ -67,8 +69,7 @@ class AsyncDiffUtil<T>(
                         if (oldList == null) {
                             insert(it.newList as List<T>)
                         } else if (oldList != it.newList) {
-                            val callback =
-                                diffUtilCallback(oldList, it.newList as List<T>, itemCallback)
+                            val callback = diffUtilCallback(oldList, it.newList as List<T>, itemCallback)
                             val result = DiffUtil.calculateDiff(callback)
                             if (coroutineContext.isActive) latch(it.newList, result)
                         }
@@ -126,7 +127,7 @@ class AsyncDiffUtil<T>(
             }
         }
 
-    internal class SimpleUpdateCallback(private val adapter: RecyclerView.Adapter<out RecyclerView.ViewHolder>) :
+    internal class SimpleUpdateCallback(private val adapter: PaginatedRecyclerAdapter<*>) :
         ListUpdateCallback {
         override fun onChanged(position: Int, count: Int, payload: Any?) {
             adapter.notifyItemRangeChanged(position, count, payload)
@@ -137,10 +138,8 @@ class AsyncDiffUtil<T>(
         }
 
         override fun onInserted(position: Int, count: Int) {
-            if (adapter is PaginatedRecyclerAdapter<*>) {
-                if (((adapter.recyclerView?.layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition()?:0) <= 2) {
-                    adapter.recyclerView?.smoothScrollToPosition(0)
-                }
+            if (((adapter.recyclerView?.layoutManager as? LinearLayoutManager)?.findFirstVisibleItemPosition() ?: 0) <= 2) {
+                adapter.recyclerView?.smoothScrollToPosition(0)
             }
             adapter.notifyItemRangeInserted(position, count)
         }

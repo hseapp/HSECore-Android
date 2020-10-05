@@ -278,6 +278,14 @@ fun downloadFile(url: String, fileName: String? = UUID.randomUUID().toString(), 
     }
 }
 
+fun <T> List<T>.lastSafe(predicate: (T) -> Boolean): T? {
+    return try {
+        last(predicate)
+    } catch (e: Exception) {
+        null
+    }
+}
+
 //operator fun Int.minus(i: Int?): Int {
 //    return i?.minus(this) ?: this
 //}

@@ -12,6 +12,7 @@ import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.R
+import com.hse.core.ui.widgets.PaginatedRecyclerView
 import com.hse.core.utils.AsyncDiffUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,10 +25,10 @@ abstract class PaginatedRecyclerAdapter<T>(
     private val asyncDiffUtil = AsyncDiffUtil(itemCallback, this, coroutineScope)
     private var isLoading = false
     private var canRestoreState = true
-    var recyclerView: RecyclerView? = null
+    var recyclerView: PaginatedRecyclerView? = null
         private set
 
-    fun submitList(
+    open fun submitList(
         list: List<T>?,
         restoreState: Boolean = false,
         onSubmitted: (() -> Unit)? = null
@@ -38,7 +39,7 @@ abstract class PaginatedRecyclerAdapter<T>(
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        this.recyclerView = recyclerView
+        this.recyclerView = recyclerView as PaginatedRecyclerView
     }
 
     fun setIsLoading(isLoading: Boolean) {
@@ -58,6 +59,8 @@ abstract class PaginatedRecyclerAdapter<T>(
         if (pos < 0 || pos >= list.size) return null
         return list[pos]
     }
+
+    fun getList() = asyncDiffUtil.list()
 
     fun isEmpty() = asyncDiffUtil.list().isEmpty()
 
