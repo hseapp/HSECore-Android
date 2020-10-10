@@ -17,11 +17,10 @@
 
     <color name="buttonDisabledText">#4D000000</color>
 
-    <color name="iconNormal">#9E9E9E</color>
-    <color name="iconAction">#757575</color>
+    <color name="iconNormal">#B3B9C6</color>
 
     <color name="navIconActive">@color/blue</color>
-    <color name="navIconInactive">#C4C8CC</color>
+    <color name="navIconInactive">@color/iconNormal</color>
 
     <color name="chipColor">#80EBEDF0</color>
     <color name="chipColorRed">#20e57373</color>
@@ -51,4 +50,5 @@
     <color name="red3">#E64646</color>
     <color name="green">#4bb34b</color>
     <color name="orange">#ff8800</color>
+
 </resources>

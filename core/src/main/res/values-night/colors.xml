@@ -17,7 +17,6 @@
     <color name="buttonDisabledText">#515151</color>
 
     <color name="iconNormal">#5f6368</color>
-    <color name="iconAction">#80868c</color>
 
     <color name="navIconActive">@color/blue</color>
     <color name="navIconInactive">#70ffffff</color>
@@ -25,7 +24,7 @@
     <color name="chipColor">#25ffffff</color>
 
     <color name="searchBarBackground">#25ffffff</color>
-    <color name="searchBarInlineIcon">@color/iconAction</color>
+    <color name="searchBarInlineIcon">@color/iconNormal</color>
 
     <!--    <color name="buttonNormal">#888</color>-->
 <!--    <color name="buttonNormalText">#fff</color>-->

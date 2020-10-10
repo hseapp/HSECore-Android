@@ -182,7 +182,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         if (toolbar == null) return
         toolbar.contentInsetStartWithNavigation = 0
         toolbar.setContentInsetsAbsolute(0, 0)
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_gray_action)
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_24)
         toolbar.setNavigationOnClickListener { activity()?.onBackPressed() }
     }
 

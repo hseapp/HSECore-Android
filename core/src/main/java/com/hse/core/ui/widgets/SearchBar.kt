@@ -53,7 +53,7 @@ open class SearchBar @JvmOverloads constructor(
     }
 
     protected val clearButton = ImageButton(context).apply {
-        setImageResource(R.drawable.ic_clear_gray_action)
+        setImageResource(R.drawable.ic_clear_24)
         setBackgroundResource(getSelectableItemBackgroundBorderless())
         onClick {
             editText.text.clear()
