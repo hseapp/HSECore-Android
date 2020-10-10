@@ -100,7 +100,7 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             is SimpleCheckboxHolder -> {
                 val item = data[position] as? Item.SimpleCheckbox ?: return
                 holder.text.text = item.text
-                holder.checkbox.setImageResource(if (item.selected) R.drawable.ic_done_circle_blue_24dp else R.drawable.ic_checkbox_unchecked_24dp)
+                holder.checkbox.setImageResource(if (item.selected) R.drawable.ic_done_circle_blue_24 else R.drawable.ic_checkbox_unchecked_24)
                 holder.itemView.onClick {
                     item.selected = !item.selected
                     item.listener(item, position, item.selected)

@@ -26,7 +26,7 @@ class InlineSearchBar @JvmOverloads constructor(
     SearchBar(context, attrs, defStyleAttr), TextView.OnEditorActionListener, TextWatcher {
 
     protected val searchIcon = ImageView(context).apply {
-        setImageResource(R.drawable.ic_search_gray_action)
+        setImageResource(R.drawable.ic_search_24)
         setColorFilter(color(R.color.searchBarInlineIcon))
     }
 

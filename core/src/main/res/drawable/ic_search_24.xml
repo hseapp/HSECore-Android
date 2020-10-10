@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
-        android:viewportWidth="24"
-        android:viewportHeight="24">
+<!--
+  ~ Copyright (c) 2020 National Research University Higher School of Economics
+  ~ All Rights Reserved.
+  -->
 
-    <path
-        android:pathData="M0 0h24v24H0V0z"/>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
     <path
         android:fillColor="@color/iconNormal"
-        android:pathData="M15.5 14h-0.79l-0.28-0.27c1.2-1.4 1.82-3.31 1.48-5.34-0.47-2.78-2.79-5-5.59-5.34-4.23-0.52-7.79 3.04-7.27 7.27 0.34 2.8 2.56 5.12 5.34 5.59 2.03 0.34 3.94-0.28 5.34-1.48l0.27 0.28 v0.79l4.25 4.25c0.41 0.41 1.08 0.41 1.49 0 0.41-0.41 0.41 -1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        android:pathData="M10.5001,5C13.5377,5 16.0001,7.4626 16.0001,10.5003C16.0001,11.7487 15.5842,12.8999 14.8835,13.823L18.7791,17.7233C19.0718,18.0164 19.0715,18.4913 18.7785,18.784C18.4854,19.0767 18.0105,19.0764 17.7178,18.7834L13.8227,14.8839C12.8996,15.5847 11.7484,16.0006 10.5001,16.0006C7.4625,16.0006 5,13.538 5,10.5003C5,7.4626 7.4625,5 10.5001,5ZM10.5001,6.5C8.2909,6.5 6.5,8.291 6.5,10.5003C6.5,12.7096 8.2909,14.5006 10.5001,14.5006C12.7092,14.5006 14.5001,12.7096 14.5001,10.5003C14.5001,8.291 12.7092,6.5 10.5001,6.5Z" />
 </vector>

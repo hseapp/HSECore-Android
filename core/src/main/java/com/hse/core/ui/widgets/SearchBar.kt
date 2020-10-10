@@ -64,7 +64,7 @@ open class SearchBar @JvmOverloads constructor(
     }
 
     protected val paramsButton = ImageButton(context).apply {
-        setImageResource(R.drawable.ic_parameters_gray_action)
+        setImageResource(R.drawable.ic_parameters_24)
         setBackgroundResource(getSelectableItemBackgroundBorderless())
         onClick {
             listener?.onParamsClicked()

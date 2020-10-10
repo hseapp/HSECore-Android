@@ -44,7 +44,7 @@
     </style>
     
     <style name="App.ThemeOverlay.ActionButton.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:src">@drawable/ic_more_vert_gray_action</item>
+        <item name="android:src">@drawable/ic_more_vert_24</item>
     </style>
 
     <style name="App.ThemeOverlay.Toolbar.Title" parent="ThemeOverlay.AppCompat.ActionBar">
