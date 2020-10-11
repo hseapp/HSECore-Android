@@ -58,11 +58,12 @@ fun showToast(text: String, long: Boolean = false) {
     ).show()
 }
 
+
 fun View.fadeIn(duration: Long = 150, delay: Long = 0, doOnComplete: (() -> Unit)? = null) {
     if (visibility == View.VISIBLE && alpha == 1f) return
+    clearAnimation()
     alpha = 0f
     visibility = View.VISIBLE
-    animate().cancel()
     animate()
         .alpha(1f)
         .setStartDelay(delay)
@@ -73,9 +74,8 @@ fun View.fadeIn(duration: Long = 150, delay: Long = 0, doOnComplete: (() -> Unit
 }
 
 fun View.fadeOut(duration: Long = 150, delay: Long = 0, doOnComplete: (() -> Unit)? = null) {
-    if (visibility == View.GONE && alpha == 0f) return
-    alpha = 1f
-    animate().cancel()
+    if (visibility == View.GONE) return
+    clearAnimation()
     animate()
         .alpha(0f)
         .setStartDelay(delay)

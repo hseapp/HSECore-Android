@@ -15,6 +15,7 @@ abstract class BaseViewModel : ViewModel() {
         set(value) {
             field = value
             for (p in paramsReadyListeners) p.invoke(value)
+            paramsReadyListeners.clear()
         }
 
     private var paramsReadyListeners = arrayListOf<(params: ViewModelParams?) -> Unit>()

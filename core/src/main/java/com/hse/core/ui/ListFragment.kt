@@ -5,6 +5,7 @@
 
 package com.hse.core.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -21,7 +23,11 @@ import com.hse.core.common.*
 import com.hse.core.enums.LoadingState
 import com.hse.core.ui.widgets.EmptyView
 import com.hse.core.ui.widgets.PaginatedRecyclerView
+import com.hse.core.utils.KeyboardEvent
 import com.hse.core.viewmodels.PaginatedViewModel
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.delay
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,6 +38,8 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
 
     private val overlayViews = Collections.synchronizedList(ArrayList<View>())
     private var currentState = LoadingState.IDLE
+    private var keyboardEventsChannel: ReceiveChannel<KeyboardEvent>? = null
+
     var adapter: PaginatedRecyclerAdapter<E>? = null
 
     abstract fun provideAdapter(): PaginatedRecyclerAdapter<E>?
@@ -45,6 +53,12 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     open fun getOverlayViewsMargin() = 0
 
     open fun onDataReceived(list: List<E>) {}
+
+    private val hideKeyboardScrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            if (newState != RecyclerView.SCROLL_STATE_IDLE) recyclerView.hideKeyboard(true)
+        }
+    }
 
     open fun getErrorView(t: Throwable?): View {
         return EmptyView(requireContext()).apply {
@@ -79,6 +93,38 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         viewModel.getDataSource()?.reset(false)
     }
 
+    private var lastKeyboardState = KeyboardEvent.HIDDEN
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        keyboardEventsChannel = activity()?.keyboardInterceptor?.subscribe()
+        lifecycleScope.launchWhenCreated {
+            keyboardEventsChannel?.consumeEach {
+                if (lastKeyboardState != it) {
+                    when (it) {
+                        KeyboardEvent.SHOWN -> {
+                            overlayViews.forEach {
+                                it.alpha = 0f
+                                it.fadeIn(delay = 100)
+                            }
+                        }
+                        KeyboardEvent.HIDDEN -> {
+                            overlayViews.forEach {
+                                it.alpha = 0f
+                                it.fadeIn(delay = 100)
+                            }
+                        }
+                    }
+                    lastKeyboardState = it
+                }
+            }
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        keyboardEventsChannel?.cancel()
+    }
+
     override fun provideView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -110,12 +156,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
             recyclerView?.adapter = adapter
         }
 
-        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (newState != RecyclerView.SCROLL_STATE_IDLE) recyclerView.hideKeyboard(true)
-            }
-        })
-
+        enableHideKeyboardOnScroll()
         recyclerView?.overScrollMode = View.OVER_SCROLL_NEVER
         swipeRefresh?.setOnRefreshListener { reload() }
 
@@ -135,8 +176,17 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         return view
     }
 
+    fun enableHideKeyboardOnScroll() {
+        recyclerView?.addOnScrollListener(hideKeyboardScrollListener)
+    }
+
+    fun disableHideKeyboardOnScroll() {
+        recyclerView?.removeOnScrollListener(hideKeyboardScrollListener)
+    }
+
     fun showErrorView(t: Throwable?) {
         if (adapter?.isEmpty() == true) {
+            removeAllOverlays(false)
             val errorView = getErrorView(t)
             errorView.setInvisible()
             overlayViews.add(errorView)
@@ -156,6 +206,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     }
 
     fun showEmptyView(emptyView: View = getEmptyView()) {
+        removeAllOverlays(false)
         emptyView.setInvisible()
         overlayViews.add(emptyView)
         mainLayout?.addView(
@@ -181,7 +232,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     }
 
     fun checkForEmpty() {
-        if (adapter?.getRealItemCount() == 0) showEmptyView()
+        if (adapter?.getRealItemCount() == 0 && currentState == LoadingState.IDLE) showEmptyView()
     }
 
     fun setState(state: LoadingState) {
@@ -194,11 +245,12 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
                 recyclerView?.setVisible()
                 progressBar?.setGone()
                 adapter?.setIsLoading(false)
+                removeAllOverlays()
             }
             LoadingState.LOADING -> {
                 removeAllOverlays()
                 if (adapter?.getRealItemCount() == 0 || state.obj == true) { //forceMainProgressBar
-                    recyclerView?.setInvisible()
+                    recyclerView?.setGone()
                     progressBar?.setVisible()
                     swipeRefresh?.isRefreshing = false
                     swipeRefresh?.isEnabled = false

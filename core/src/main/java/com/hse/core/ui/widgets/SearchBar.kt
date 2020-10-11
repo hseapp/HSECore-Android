@@ -6,6 +6,7 @@
 package com.hse.core.ui.widgets
 
 import android.content.Context
+import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
@@ -121,9 +122,17 @@ open class SearchBar @JvmOverloads constructor(
 
     }
 
+    fun saveInstanceState(bundle: Bundle?) {
+        bundle?.putString("search_bar_text", getText().toString())
+    }
+
+    fun restoreState(bundle: Bundle?) {
+        editText.setText(bundle?.getString("search_bar_text") ?: return)
+    }
+
     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-        handler.removeCallbacks(runnable)
-        handler.postDelayed(runnable, 300)
+        handler?.removeCallbacks(runnable)
+        handler?.postDelayed(runnable, 300)
         if (s != null && s.isNotEmpty()) {
             clearButton.fadeIn(100)
             if (paramsButtonVisible) paramsButton.fadeOut(100)
