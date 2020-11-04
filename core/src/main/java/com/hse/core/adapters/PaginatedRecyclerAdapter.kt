@@ -14,15 +14,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.R
 import com.hse.core.ui.widgets.PaginatedRecyclerView
 import com.hse.core.utils.AsyncDiffUtil
+import com.hse.core.utils.ListTransformer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 
 abstract class PaginatedRecyclerAdapter<T>(
     itemCallback: DiffUtil.ItemCallback<T>,
-    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO)
+    coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO),
+    transformer: ListTransformer<T>? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val asyncDiffUtil = AsyncDiffUtil(itemCallback, this, coroutineScope)
+    private val asyncDiffUtil = AsyncDiffUtil(itemCallback, this, transformer, coroutineScope)
     private var isLoading = false
     private var canRestoreState = true
     var recyclerView: PaginatedRecyclerView? = null

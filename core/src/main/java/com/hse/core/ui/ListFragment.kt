@@ -160,12 +160,12 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         recyclerView?.overScrollMode = View.OVER_SCROLL_NEVER
         swipeRefresh?.setOnRefreshListener { reload() }
 
-        viewModel.getDataSource()?.observe(viewLifecycleOwner, {
+        viewModel.getDataSource()?.observe(viewLifecycleOwner, Observer{
             onDataReceived(it)
             adapter?.submitList(it, savedInstanceState != null) { checkForEmpty() }
         })
-        viewModel.loadingState?.observe(this, { setState(it) })
-        viewModel.listModelState.observe(this, {
+        viewModel.loadingState?.observe(this, Observer{ setState(it) })
+        viewModel.listModelState.observe(this, Observer {
             if (it != null) {
                 swipeRefresh?.isEnabled = it.canRefresh
             }

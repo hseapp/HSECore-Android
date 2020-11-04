@@ -286,6 +286,12 @@ fun <T> List<T>.lastSafe(predicate: (T) -> Boolean): T? {
     }
 }
 
+fun Int?.safe(default: Int = 0) : Int = this ?: default
+fun Long?.safe(default: Long = 0) : Long = this ?: default
+fun Float?.safe(default: Float = 0f) : Float = this ?: default
+fun Double?.safe(default: Double = 0.0) : Double = this ?: default
+fun String?.safe(default: String = "") : String = this ?: default
+
 //operator fun Int.minus(i: Int?): Int {
 //    return i?.minus(this) ?: this
 //}

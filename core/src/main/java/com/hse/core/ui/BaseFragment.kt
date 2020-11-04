@@ -24,14 +24,28 @@ import com.hse.core.common.animateTranslationZ
 import com.hse.core.common.dp
 import com.hse.core.navigation.CommonViewParamHolder
 import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_COMMON_VIEWS
+import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_FLAGS
+import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_IS_ROOT
 import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_RANDOM_KEY
 import com.hse.core.ui.BaseFragment.Builder.Companion.ARG_REQUEST_CODE
 import com.hse.core.viewmodels.BaseViewModel
 
 
 abstract class BaseFragment<T : BaseViewModel> : Fragment() {
-    open var flags = 0
-    var isRootFragment = false
+    open var flags: Int? = null
+        get() {
+            if (field == null) {
+                field = arguments?.getInt(ARG_FLAGS) ?: 0
+            }
+            return field
+        }
+    var isRootFragment: Boolean = false
+        get() {
+            if (!field) {
+                field = arguments?.getBoolean(ARG_IS_ROOT) ?: false
+            }
+            return field
+        }
     open val hasTransparentStatusBar = false
     val commonViews = HashMap<Int, CommonViewParamHolder>()
     lateinit var viewModel: T
@@ -62,8 +76,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) {
-    }
+    ) = Unit
 
     open fun canFinish() = true
     open fun onFragmentStackSelected() = true
@@ -228,10 +241,20 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
             else ctx?.navigation?.addFragment(fragment, rootTag)
         }
 
+        fun setFlags(flags: Int) {
+            arguments.putInt(ARG_FLAGS, flags)
+        }
+
+        fun setIsRootFragment() {
+            arguments.putBoolean(ARG_IS_ROOT, true)
+        }
+
         companion object {
-            const val ARG_RANDOM_KEY = "random_key"
-            const val ARG_COMMON_VIEWS = "common_views"
-            const val ARG_REQUEST_CODE = "request_code"
+            const val ARG_RANDOM_KEY = "f_random_key"
+            const val ARG_COMMON_VIEWS = "f_common_views"
+            const val ARG_REQUEST_CODE = "f_request_code"
+            const val ARG_FLAGS = "f_flags"
+            const val ARG_IS_ROOT = "f_is_root"
         }
     }
 
