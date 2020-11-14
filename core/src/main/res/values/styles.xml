@@ -33,6 +33,10 @@
 
     <style name="App.ThemeOverlay.EditText" parent="Widget.AppCompat.EditText">
         <item name="android:capitalize">sentences</item>
+        <item name="android:background">@drawable/rounded_gray_rect</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:clipToPadding">false</item>
     </style>
 
 
