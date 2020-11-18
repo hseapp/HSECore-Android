@@ -41,7 +41,7 @@ class AsyncDiffUtil<T>(
         doOnSubmitted = onSubmitted
         if (restoreState) {
             this.list = getTransformedList(newList as ArrayList<T>)
-            readOnlyList = Collections.unmodifiableList(newList)
+            readOnlyList = Collections.unmodifiableList(this.list)
             adapter.notifyDataSetChanged()
             onSubmitted?.invoke()
         } else {
