@@ -14,7 +14,6 @@ import kotlinx.coroutines.channels.Channel.Factory.CONFLATED
 import kotlinx.coroutines.channels.actor
 import kotlinx.coroutines.channels.consumeEach
 import java.util.*
-import javax.xml.transform.Transformer
 import kotlin.collections.ArrayList
 
 class AsyncDiffUtil<T>(
@@ -41,7 +40,7 @@ class AsyncDiffUtil<T>(
         expectedListSize = newList?.size ?: 0
         doOnSubmitted = onSubmitted
         if (restoreState) {
-            this.list = newList
+            this.list = getTransformedList(newList as ArrayList<T>)
             readOnlyList = Collections.unmodifiableList(newList)
             adapter.notifyDataSetChanged()
             onSubmitted?.invoke()
@@ -52,6 +51,21 @@ class AsyncDiffUtil<T>(
                 actor.offer(Operation.Update(newList))
             }
         }
+    }
+
+    private fun getTransformedList(list: ArrayList<T>) : ArrayList<T> {
+        val newList: ArrayList<T>
+        if (transformer == null) {
+            newList = list
+        } else {
+            newList = ArrayList()
+            list.forEach { o ->
+                val transformed = transformer.transform(o)
+                if (transformed == null) newList.add(o)
+                else newList.addAll(transformed)
+            }
+        }
+        return newList
     }
 
     @ExperimentalCoroutinesApi
@@ -68,17 +82,7 @@ class AsyncDiffUtil<T>(
                 }
                 is Operation.Update -> {
                     withContext(Dispatchers.Default) {
-                        val newList: ArrayList<T>
-                        if (transformer == null) {
-                            newList = it.newList as ArrayList<T>
-                        } else {
-                            newList = ArrayList()
-                            (it.newList as ArrayList<T>).forEach { o ->
-                                val transformed = transformer.transform(o)
-                                if (transformed == null) newList.add(o)
-                                else newList.addAll(transformed)
-                            }
-                        }
+                        val newList = getTransformedList(it.newList as ArrayList<T>)
 
                         if (oldList == null) {
                             insert(newList as List<T>)
