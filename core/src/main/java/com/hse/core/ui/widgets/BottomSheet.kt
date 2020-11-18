@@ -37,6 +37,7 @@ abstract class BottomSheet(val context: Context) {
         private set
 
     protected var isHidable = true
+    protected var isSkipCollapsed = false
     protected var defaultState = BottomSheetBehavior.STATE_EXPANDED
     protected var peekHeight = dip(100f)
     protected var bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
@@ -67,6 +68,7 @@ abstract class BottomSheet(val context: Context) {
                 if (it is BottomSheetDialog) {
                     BottomSheetBehavior.from(it.findViewById<ViewGroup>(com.google.android.material.R.id.design_bottom_sheet)!!)
                         .apply {
+                            skipCollapsed = isSkipCollapsed
                             peekHeight = this@BottomSheet.peekHeight
                             isHideable = this@BottomSheet.isHidable
                             if (defaultState >= 0) state = defaultState
