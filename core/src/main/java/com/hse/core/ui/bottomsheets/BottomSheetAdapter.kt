@@ -188,7 +188,7 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     fun removeItem(item: Item) {
         data.remove(item)
         originalData.remove(item)
-        notifyItemRemoved(data.indexOf(item))
+        notifyDataSetChanged()
     }
 
     fun filter(s: String?, predicate: (Item) -> Boolean) {
