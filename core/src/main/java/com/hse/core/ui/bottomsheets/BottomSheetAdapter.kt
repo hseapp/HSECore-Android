@@ -12,6 +12,7 @@ import com.hse.core.R
 import com.hse.core.common.onClick
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_DATE_FROM_TO
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_HORIZONTAL_CHIPS
+import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_NUMBER_PICKER
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_RANGE_PICKER
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_CHECKBOX
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_ITEM
@@ -19,6 +20,7 @@ import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_SWITCH
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_TITLED_ITEM
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SLIDER
 import com.innovattic.rangeseekbar.RangeSeekBar
+import it.sephiroth.android.library.numberpicker.doOnProgressChanged
 
 open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val data = ArrayList<Item>()
@@ -34,6 +36,7 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             TYPE_SIMPLE_ITEM -> SimpleItemHolder(parent)
             TYPE_SIMPLE_SWITCH -> SimpleSwitchHolder(parent)
             TYPE_SLIDER -> SliderHolder(parent)
+            TYPE_NUMBER_PICKER -> NumberPickerHolder(parent)
             else -> throw Exception("No view found")
         }
     }
@@ -161,6 +164,18 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                     })
                 }
             }
+            is NumberPickerHolder -> {
+                val item = data[position] as? Item.NumberPickerItem ?: return
+                holder.prefixTv.text = item.prefix
+                holder.suffixTv.text = item.suffix
+                holder.numberPicker.progress = item.initProgress
+                holder.numberPicker.maxValue = item.maxValue
+                holder.numberPicker.minValue = item.minValue
+                holder.numberPicker.stepSize = item.stepSize
+                holder.numberPicker.doOnProgressChanged { numberPicker, progress, formUser ->
+                    item.listener(progress)
+                }
+            }
         }
     }
 
@@ -168,6 +183,12 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     fun addItem(item: Item) {
         data.add(item)
         originalData.add(item)
+    }
+
+    fun removeItem(item: Item) {
+        data.remove(item)
+        originalData.remove(item)
+        notifyDataSetChanged()
     }
 
     fun filter(s: String?, predicate: (Item) -> Boolean) {

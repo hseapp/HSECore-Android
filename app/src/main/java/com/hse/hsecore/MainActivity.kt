@@ -6,11 +6,16 @@
 package com.hse.hsecore
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.dbrain.flow.Flow
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.hse.core.common.dip
+import com.hse.core.ui.bottomsheets.BottomSheetAdapter
+import com.hse.core.ui.bottomsheets.Item
 import com.hse.core.ui.widgets.BottomSheet
+import kotlinx.android.synthetic.main.dialog_settings.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,8 +26,22 @@ class MainActivity : AppCompatActivity() {
 
     fun showBottomSheet(v: View) {
         object : BottomSheet(this) {
+
+            private lateinit var recyclerView: RecyclerView
+
+            init {
+                peekHeight = dip(600f)
+            }
+
             override fun getView(): View {
-                return Button(this@MainActivity)
+                val view =
+                    LayoutInflater.from(context).inflate(R.layout.dialog_settings, null, false)
+                recyclerView = view.settingsList
+                recyclerView.layoutManager = LinearLayoutManager(context)
+                val adapter = BottomSheetAdapter()
+
+                recyclerView.adapter = adapter
+                return view
             }
 
             override fun getBottomView() = null

@@ -7,6 +7,7 @@ package com.hse.core.ui.bottomsheets
 
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_DATE_FROM_TO
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_HORIZONTAL_CHIPS
+import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_NUMBER_PICKER
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_RANGE_PICKER
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_CHECKBOX
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_ITEM
@@ -24,6 +25,7 @@ object BottomSheetHolders {
     const val TYPE_SIMPLE_ITEM = 6
     const val TYPE_SIMPLE_SWITCH = 7
     const val TYPE_SLIDER = 8
+    const val TYPE_NUMBER_PICKER = 9
 }
 
 sealed class Item(val type: Int, var tag: String? = null) {
@@ -97,4 +99,14 @@ sealed class Item(val type: Int, var tag: String? = null) {
     data class SimpleItem(
         val text: String?
     ) : Item(TYPE_SIMPLE_ITEM)
+
+    data class NumberPickerItem(
+        val prefix: String,
+        val suffix: String,
+        val initProgress: Int = 0,
+        val maxValue: Int = 100,
+        val minValue: Int = 0,
+        val stepSize: Int = 1,
+        val listener: (Int) -> Unit
+    ) : Item(TYPE_NUMBER_PICKER)
 }
