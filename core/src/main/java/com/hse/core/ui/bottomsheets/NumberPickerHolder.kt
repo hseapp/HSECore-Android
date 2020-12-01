@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_item_number_picker.view.*
 
 class NumberPickerHolder(parent: ViewGroup) : BaseBottomSheetHolder(
     LayoutInflater.from(parent.context).inflate(
-        R.layout.bottom_sheet_item_switch,
+        R.layout.bottom_sheet_item_number_picker,
         parent,
         false
     ), BottomSheetHolders.TYPE_NUMBER_PICKER
