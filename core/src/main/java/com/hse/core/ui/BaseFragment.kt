@@ -83,7 +83,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     open fun onNewIntent(intent: Intent?) {}
     open fun onFilePicked(intent: Intent?) {}
 
-    internal fun computeFragmentTag() = getFragmentTag() + (arguments?.getInt(ARG_RANDOM_KEY) ?: (0..Integer.MAX_VALUE).random().toString())
+    internal fun computeFragmentTag() = getFragmentTag() + arguments?.getInt(ARG_RANDOM_KEY)
     private var postponedFinish = false
 
     fun finish() {
