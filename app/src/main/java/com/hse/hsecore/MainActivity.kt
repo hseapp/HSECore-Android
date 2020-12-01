@@ -40,31 +40,6 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.layoutManager = LinearLayoutManager(context)
                 val adapter = BottomSheetAdapter()
 
-                val numberPickerItem = Item.NumberPickerItem(
-                    prefix = "tset",
-                    suffix = "shozp",
-                    initProgress = 5,
-                    maxValue = 60,
-                    minValue = 5,
-                    stepSize = 5
-                ) { progress ->
-
-                }
-                adapter.addItem(
-                    Item.SimpleSwitch(
-                        "zalupa",
-                        false
-                    ) { i, pos, isSelected ->
-                        i.selected = isSelected
-                        if (isSelected) {
-                            adapter.addItem(numberPickerItem)
-                            adapter.notifyItemInserted(pos + 1)
-                        } else {
-                            adapter.removeItem(numberPickerItem)
-                        }
-                    }
-                )
-
                 recyclerView.adapter = adapter
                 return view
             }
