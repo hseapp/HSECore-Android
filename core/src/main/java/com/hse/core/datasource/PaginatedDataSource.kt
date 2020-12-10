@@ -16,7 +16,6 @@ import kotlinx.coroutines.channels.Channel.Factory.UNLIMITED
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.channels.actor
 import kotlinx.coroutines.channels.consumeEach
-import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class PaginatedDataSource<T, J : PaginationResult<T>> {
     private lateinit var coroutineScope: CoroutineScope
@@ -85,6 +84,13 @@ abstract class PaginatedDataSource<T, J : PaginationResult<T>> {
 
     fun clear() {
         actor?.offer(JobType.CLEAR)
+    }
+
+    fun loadCached() {
+        coroutineScope.launch {
+            val jobResult = load(JobType.LOAD_INIT_CACHE, null)
+            publishData(true, jobResult?.list)
+        }
     }
 
     fun loadNext(): Boolean {
