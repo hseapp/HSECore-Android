@@ -27,7 +27,6 @@ import com.hse.core.utils.KeyboardEvent
 import com.hse.core.viewmodels.PaginatedViewModel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.delay
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -219,6 +218,10 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
             }
         )
         emptyView.fadeIn()
+    }
+
+    fun hideEmptyView(emptyView: View = getEmptyView()) {
+        emptyView.fadeOut()
     }
 
     fun removeAllOverlays(withAnimation: Boolean = true) {
