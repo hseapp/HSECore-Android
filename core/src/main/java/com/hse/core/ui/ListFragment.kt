@@ -221,7 +221,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     }
 
     fun hideEmptyView(emptyView: View = getEmptyView()) {
-        emptyView.fadeOut()
+        emptyView.setGone()
     }
 
     fun removeAllOverlays(withAnimation: Boolean = true) {
@@ -236,6 +236,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
 
     fun checkForEmpty() {
         if (adapter?.getRealItemCount() == 0 && currentState == LoadingState.IDLE) showEmptyView()
+        else hideEmptyView()
     }
 
     fun setState(state: LoadingState) {
