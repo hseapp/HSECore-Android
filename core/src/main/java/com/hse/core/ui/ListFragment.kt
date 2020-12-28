@@ -221,7 +221,12 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     }
 
     fun hideEmptyView(emptyView: View = getEmptyView()) {
-        emptyView.setGone()
+        removeAllOverlays(false)
+        emptyView.setInvisible()
+        overlayViews.remove(emptyView)
+        mainLayout?.removeView(
+            emptyView
+        )
     }
 
     fun removeAllOverlays(withAnimation: Boolean = true) {
