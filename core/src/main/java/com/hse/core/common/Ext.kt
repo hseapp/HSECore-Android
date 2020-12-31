@@ -5,6 +5,7 @@
 
 package com.hse.core.common
 
+import android.Manifest
 import android.R
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -12,6 +13,7 @@ import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Environment
@@ -19,14 +21,17 @@ import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.BaseApplication
 import com.hse.core.ui.BaseActivity
 import com.hse.core.ui.BaseFragment
@@ -292,10 +297,46 @@ fun Float?.safe(default: Float = 0f) : Float = this ?: default
 fun Double?.safe(default: Double = 0.0) : Double = this ?: default
 fun String?.safe(default: String = "") : String = this ?: default
 
-//operator fun Int.minus(i: Int?): Int {
-//    return i?.minus(this) ?: this
-//}
-//
-//operator fun Int.plus(i: Int?): Int {
-//    return i?.plus(this) ?: this
-//}
+fun TextView.bind(text: CharSequence?) {
+    if (text == null) {
+        this.setGone()
+    } else {
+        this.text = text
+        this.setVisible()
+    }
+}
+
+inline var View.isVisible: Boolean
+    get() = visibility == View.VISIBLE
+    set(value) {
+        visibility = if (value) View.VISIBLE else View.GONE
+    }
+
+infix fun <T1, T2, T3> Pair<T1, T2>.to(third: T3) = Triple(first, second, third)
+
+fun Context.downloadFile(url: String, fileName: String? = "File") {
+    if (this !is Activity) return
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+            1
+        )
+    } else {
+        com.hse.core.common.downloadFile(url, fileName)
+    }
+}
+
+fun <T> T.applyIf(predicate: () -> Boolean, action: (T) -> T): T {
+    if (predicate.invoke()) action.invoke(this)
+    return this
+}
+
+fun RecyclerView.hideKeyboardOnScroll() {
+    val hideKeyboardScrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            if (newState != RecyclerView.SCROLL_STATE_IDLE) recyclerView.hideKeyboard(true)
+        }
+    }
+    addOnScrollListener(hideKeyboardScrollListener)
+}
