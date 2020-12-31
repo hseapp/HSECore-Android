@@ -120,6 +120,7 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                         item.listener(item, position, item.selected)
                     }
                 } else if (item is Item.SimpleCheckboxMultiline) {
+                    holder.text.maxLines = 10
                     set(item.text, item.selected) {
                         item.selected = !item.selected
                         item.listener(item, position, item.selected)
