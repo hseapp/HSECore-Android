@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.R
 import com.hse.core.common.onClick
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_DATE_FROM_TO
+import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_HEADER
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_HORIZONTAL_CHIPS
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_NUMBER_PICKER
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_RANGE_PICKER
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_CHECKBOX
+import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_CHECKBOX_MULTILINE
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_ITEM
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_SWITCH
 import com.hse.core.ui.bottomsheets.BottomSheetHolders.TYPE_SIMPLE_TITLED_ITEM
@@ -37,6 +39,8 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             TYPE_SIMPLE_SWITCH -> SimpleSwitchHolder(parent)
             TYPE_SLIDER -> SliderHolder(parent)
             TYPE_NUMBER_PICKER -> NumberPickerHolder(parent)
+            TYPE_HEADER -> HeaderHolder(parent)
+            TYPE_SIMPLE_CHECKBOX_MULTILINE -> SimpleCheckboxHolder(parent)
             else -> throw Exception("No view found")
         }
     }
@@ -101,13 +105,25 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 holder.setDateTo(item.currentTimeTo)
             }
             is SimpleCheckboxHolder -> {
-                val item = data[position] as? Item.SimpleCheckbox ?: return
-                holder.text.text = item.text
-                holder.checkbox.setImageResource(if (item.selected) R.drawable.ic_done_circle_blue_24 else R.drawable.ic_checkbox_unchecked_24)
-                holder.itemView.onClick {
-                    item.selected = !item.selected
-                    item.listener(item, position, item.selected)
-                    notifyItemChanged(position)
+                val item = data[position]
+                fun set(text: String, selected: Boolean, onClick: () -> Unit) {
+                    holder.text.text = text
+                    holder.checkbox.setImageResource(if (selected) R.drawable.ic_done_circle_blue_24 else R.drawable.ic_checkbox_unchecked_24)
+                    holder.itemView.onClick {
+                        onClick()
+                        notifyItemChanged(position)
+                    }
+                }
+                if (item is Item.SimpleCheckbox) {
+                    set(item.text, item.selected) {
+                        item.selected = !item.selected
+                        item.listener(item, position, item.selected)
+                    }
+                } else if (item is Item.SimpleCheckboxMultiline) {
+                    set(item.text, item.selected) {
+                        item.selected = !item.selected
+                        item.listener(item, position, item.selected)
+                    }
                 }
             }
             is SimpleItemHolder -> {
@@ -175,6 +191,10 @@ open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 holder.numberPicker.doOnProgressChanged { numberPicker, progress, formUser ->
                     item.listener(progress)
                 }
+            }
+            is HeaderHolder -> {
+                val item = data[position] as? Item.Header ?: return
+                holder.title.text = item.text
             }
         }
     }

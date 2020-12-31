@@ -39,4 +39,7 @@
     <color name="big_divider">#515151</color>
 
     <color name="blue">#4285f4</color>
+
+    <color name="gray">@color/searchBarBackground</color>
+
 </resources>
