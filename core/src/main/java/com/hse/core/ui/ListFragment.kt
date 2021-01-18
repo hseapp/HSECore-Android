@@ -88,7 +88,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         return true
     }
 
-    protected fun reload() {
+    open fun reload() {
         viewModel.getDataSource()?.reset(false)
     }
 
