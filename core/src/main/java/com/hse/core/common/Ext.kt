@@ -327,8 +327,8 @@ fun Context.downloadFile(url: String, fileName: String? = "File") {
     }
 }
 
-fun <T> T.applyIf(predicate: () -> Boolean, action: (T) -> T): T {
-    if (predicate.invoke()) action.invoke(this)
+inline fun <T> T.applyIf(predicate: Boolean, action: T.() -> Unit): T {
+    if (predicate) action()
     return this
 }
 

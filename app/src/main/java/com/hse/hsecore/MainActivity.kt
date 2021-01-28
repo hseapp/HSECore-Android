@@ -17,9 +17,11 @@ import com.hse.core.ui.bottomsheets.BottomSheetAdapter
 import com.hse.core.ui.widgets.BottomSheet
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_settings.view.*
+import kotlin.contracts.ExperimentalContracts
 
 class MainActivity : AppCompatActivity() {
 
+    @ExperimentalContracts
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
