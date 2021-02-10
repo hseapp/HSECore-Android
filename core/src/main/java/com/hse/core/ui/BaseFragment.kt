@@ -54,8 +54,8 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
     internal var resultData: Intent? = null
     internal var resultCode = Activity.RESULT_CANCELED
 
-    private var appBarOffset = 0
-    private val appBarOffsetThreshold = dp(48f)
+    protected var appBarOffset = 0
+    protected val appBarOffsetThreshold = dp(48f)
 
     private var doOnReady: (() -> Unit)? = null
 
@@ -164,8 +164,8 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         activity?.startActivityForResult(mediaIntent, REQUEST_CODE_PICK_FILE)
     }
 
-    private var isAppBarAnimating = false
-    private fun checkOffset(appBarLayout: AppBarLayout?, childY: Float) {
+    protected var isAppBarAnimating = false
+    protected open fun checkOffset(appBarLayout: AppBarLayout?, childY: Float) {
         if (!isAppBarAnimating && (appBarOffset <= -appBarOffsetThreshold || childY < 0)) {
             isAppBarAnimating = true
             appBarLayout?.animateTranslationZ(dp(4f)) {
@@ -183,7 +183,7 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
             val child = layoutManager.getChildAt(0) ?: return
             val childY = child.y
 
-            if (childY == 0f && firstVisible == 0) {
+            if (childY >= 0f && firstVisible == 0) {
                 appBarLayout?.animateTranslationZ(0f)
             } else {
                 checkOffset(appBarLayout, childY)
