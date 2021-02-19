@@ -158,6 +158,20 @@ class Navigation(
         }
     }
 
+    fun removeStack(rootTag: String) {
+        fragmentsMap[rootTag]?.let { list ->
+            val transaction = fragmentManager.beginTransaction()
+            list.forEachIndexed { index, fragment ->
+                if (index > 0) {
+                    transaction.remove(fragment)
+                }
+            }
+            list.clear()
+            transaction.commitAllowingStateLoss()
+            fragmentsMap.remove(rootTag)
+        }
+    }
+
     fun dropStack(rootTag: String = currentRoot) {
         val list = getRootListOrCreate(rootTag)
         val transaction = fragmentManager.beginTransaction()
