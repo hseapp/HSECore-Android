@@ -36,6 +36,9 @@ abstract class BottomSheet(val context: Context) {
     protected var dialog: SheetDialog? = null
         private set
 
+    protected lateinit var handleLayout: ViewGroup
+    protected lateinit var handle: View
+
     protected var isHidable = true
     protected var isSkipCollapsed = false
     protected var defaultState = BottomSheetBehavior.STATE_EXPANDED
@@ -103,6 +106,8 @@ abstract class BottomSheet(val context: Context) {
     private fun getDecoratedView(): View {
         val layout =
             LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null, false) as ViewGroup
+        handleLayout = layout.findViewById(R.id.header)
+        handle = layout.findViewById(R.id.handle)
         layout.findViewById<ViewGroup>(R.id.content).addView(getView())
         return layout
     }
