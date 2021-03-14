@@ -326,7 +326,7 @@ fun downloadFile(url: String, fileName: String? = "File") {
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
         dm.enqueue(request)
     } catch (e: Throwable) {
-        showToast(R.string.error_occurred)
+        showToast(R.string.error_occurred_downloading_file)
     }
 }
 
