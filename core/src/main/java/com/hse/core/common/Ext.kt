@@ -6,7 +6,6 @@
 package com.hse.core.common
 
 import android.Manifest
-import android.R
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
@@ -33,6 +32,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.BaseApplication
+import com.hse.core.R
 import com.hse.core.ui.BaseActivity
 import com.hse.core.ui.BaseFragment
 import com.hse.core.utils.ClickListener
@@ -211,16 +211,6 @@ fun getFileSizeString(size: Long?): String? {
     }
 }
 
-fun downloadFile(url: String, fileName: String? = "File") {
-    val dm =
-        BaseApplication.appContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-    val request = DownloadManager.Request(Uri.parse(url))
-    request.setTitle(fileName)
-    val title = fileName?.replace("\\W*", "") ?: ""
-    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
-    dm.enqueue(request)
-}
-
 fun <T> List<T>.lastSafe(): T? {
     if (isEmpty()) return null
     return get(size - 1)
@@ -324,6 +314,19 @@ fun Context.downloadFile(url: String, fileName: String? = "File") {
         )
     } else {
         com.hse.core.common.downloadFile(url, fileName)
+    }
+}
+
+fun downloadFile(url: String, fileName: String? = "File") {
+    try {
+        val dm = BaseApplication.appContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        val request = DownloadManager.Request(Uri.parse(url))
+        request.setTitle(fileName)
+        val title = fileName?.replace("\\W*", "") ?: ""
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
+        dm.enqueue(request)
+    } catch (e: Throwable) {
+        showToast(R.string.error_occurred)
     }
 }
 
