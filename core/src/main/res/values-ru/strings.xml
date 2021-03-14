@@ -18,5 +18,4 @@
     <string name="yes">Да</string>
     <string name="drop_date">Сбросить дату</string>
     <string name="select_new_date">Выбрать дату</string>
-    <string name="error_occurred_downloading_file">Произошла ошибка. Попробуйте изменить имя файла, не используя пробелы и русские символы.</string>
 </resources>
