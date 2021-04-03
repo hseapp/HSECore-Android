@@ -26,14 +26,7 @@ class PaginatedRecyclerView @JvmOverloads constructor(
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
-            if (dataSource == null) return
-            val manager = (layoutManager as? LinearLayoutManager) ?: return
-            val adapter = getPaginatedAdapter() ?: return
-            val totalItemsCount = adapter.itemCount
-            val lastVisibleItemPosition = manager.findLastVisibleItemPosition()
-            if (totalItemsCount - lastVisibleItemPosition > paginationThreshold || totalItemsCount == 0 || lock.get()) return
-            lock()
-            dataSource?.loadNext()
+            tryLoadNext()
         }
     }
     private var dataSource: PaginatedDataSource<*, *>? = null
@@ -44,6 +37,19 @@ class PaginatedRecyclerView @JvmOverloads constructor(
         removeCallbacks(unlocker)
         lock.set(true)
         postDelayed(unlocker, 500)
+    }
+
+    private fun getPaginatedAdapter() = adapter as? PaginatedRecyclerAdapter<*>?
+
+    fun tryLoadNext() {
+        if (dataSource == null) return
+        val manager = (layoutManager as? LinearLayoutManager) ?: return
+        val adapter = getPaginatedAdapter() ?: return
+        val totalItemsCount = adapter.itemCount
+        val lastVisibleItemPosition = manager.findLastVisibleItemPosition()
+        if (totalItemsCount - lastVisibleItemPosition > paginationThreshold || totalItemsCount == 0 || lock.get()) return
+        lock()
+        dataSource?.loadNext()
     }
 
     fun init(
@@ -59,5 +65,4 @@ class PaginatedRecyclerView @JvmOverloads constructor(
         addOnScrollListener(scrollListener)
     }
 
-    private fun getPaginatedAdapter() = adapter as? PaginatedRecyclerAdapter<*>?
 }
