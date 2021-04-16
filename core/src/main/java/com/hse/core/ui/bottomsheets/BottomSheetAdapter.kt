@@ -25,8 +25,8 @@ import com.innovattic.rangeseekbar.RangeSeekBar
 import it.sephiroth.android.library.numberpicker.doOnProgressChanged
 
 open class BottomSheetAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val data = ArrayList<Item>()
-    private val originalData = ArrayList<Item>()
+    protected val data = ArrayList<Item>()
+    protected val originalData = ArrayList<Item>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
