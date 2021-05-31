@@ -16,7 +16,8 @@
         android:id="@+id/title"
         style="@style/AppTheme.Text.Subtitle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:layout_height="36dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp" />
 
@@ -24,7 +25,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:clipToPadding="false"
         android:paddingStart="14dp"
         android:paddingEnd="12dp" />
