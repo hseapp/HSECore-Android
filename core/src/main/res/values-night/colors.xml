@@ -11,8 +11,8 @@
     <color name="bottomNavigation">@color/navigationBar</color>
     <color name="floatingButton">#333</color>
 
-    <color name="textPrimary">#f1f3f4</color>
-    <color name="textSecondary">#80868b</color>
+    <color name="textPrimary">#ffffff</color>
+    <color name="textSecondary">#76787A</color>
 
     <color name="buttonDisabledText">#515151</color>
 
@@ -38,7 +38,10 @@
     <color name="divider">#515151</color>
     <color name="big_divider">#515151</color>
 
-    <color name="blue">#4285f4</color>
+    <color name="blue">#5395FF</color>
+
+    <color name="blueLight">#155395FF</color>
+    <color name="red">#F0522B</color>
 
     <color name="gray">@color/searchBarBackground</color>
 

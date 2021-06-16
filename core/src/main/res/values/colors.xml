@@ -12,7 +12,7 @@
     <color name="floatingButton">#fff</color>
 
     <color name="textPrimary">#000000</color>
-    <color name="textSecondary">#909499</color>
+    <color name="textSecondary">#818C99</color>
     <color name="textHint">#ababab</color>
 
     <color name="buttonDisabledText">#4D000000</color>
@@ -45,7 +45,7 @@
     <color name="blueDark">#155BB7</color>
     <color name="blueInactive">#8CB9F3</color>
 
-    <color name="red">#F4511E</color>
+    <color name="red">#FF564E</color>
     <color name="red2">#e57373</color>
     <color name="red3">#E64646</color>
     <color name="green">#4bb34b</color>
