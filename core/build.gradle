@@ -7,7 +7,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-group = 'com.github.hseapp'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 30
@@ -38,6 +38,15 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.hseapp'
+            artifactId = 'library'
+        }
+    }
 }
 
 dependencies {
