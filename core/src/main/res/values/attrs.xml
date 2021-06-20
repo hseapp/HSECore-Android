@@ -12,6 +12,7 @@
             <enum name="BLUE" value="0"/>
             <enum name="TRANSPARENT" value="1"/>
             <enum name="TRANSPARENT_WITH_BORDER" value="2"/>
+            <enum name="SECONDARY" value="3"/>
         </attr>
         <attr name="icon" format="reference"/>
     </declare-styleable>

@@ -59,6 +59,10 @@ class HseButton @JvmOverloads constructor(
                 setBackgroundResource(R.drawable.hse_button_transparent_border_normal)
                 setTextColor(color(R.color.buttonTransparentText))
             }
+            Type.SECONDARY -> {
+                setBackgroundResource(R.drawable.hse_button_secondary_normal)
+                setTextColor(color(R.color.buttonTransparentText))
+            }
         }
     }
 
@@ -109,7 +113,7 @@ class HseButton @JvmOverloads constructor(
     }
 
     enum class Type {
-        BLUE, TRANSPARENT, TRANSPARENT_WITH_BORDER
+        BLUE, TRANSPARENT, TRANSPARENT_WITH_BORDER, SECONDARY
     }
 
     inner class ImageSpanExt(context: Context, drawable: Int, val tag: Int) :
