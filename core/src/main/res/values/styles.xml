@@ -76,6 +76,13 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
+    <style name="AppTheme.Text.Title3" parent="AppTheme.Text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
     <style name="AppTheme.Text.Primary" parent="AppTheme.Text">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/textPrimary</item>
