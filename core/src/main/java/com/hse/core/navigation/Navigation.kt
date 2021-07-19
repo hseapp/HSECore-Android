@@ -172,17 +172,19 @@ class Navigation(
         }
     }
 
-    fun dropStack(rootTag: String = currentRoot) {
+    fun dropStack(rootTag: String = currentRoot, removeRootFragment: Boolean = false) {
         val list = getRootListOrCreate(rootTag)
         val transaction = fragmentManager.beginTransaction()
-        val rootFragment = list[0]
+        val rootFragment: BaseFragment<*>? = if (removeRootFragment) null else list[0]
         list.forEachIndexed { index, fragment ->
-            if (index > 0) {
+            if (removeRootFragment || index > 0) {
                 transaction.remove(fragment)
             }
         }
         list.clear()
-        list.add(rootFragment)
+        if (rootFragment != null) {
+            list.add(rootFragment)
+        }
         transaction.commitAllowingStateLoss()
         showTopFragmentInStack(rootTag)
     }
