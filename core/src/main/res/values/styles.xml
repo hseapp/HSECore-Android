@@ -56,17 +56,18 @@
 
     <style name="AppTheme.Text">
         <item name="android:lineSpacingMultiplier">1.2</item>
-    </style>
-
-    <style name="AppTheme.Text.Title" parent="AppTheme.Text">
-        <item name="android:textSize">18sp</item>
-        <item name="android:fontFamily">@font/futuramedium</item>
+        <item name="android:textColor">@color/textPrimary</item>
     </style>
 
     <style name="AppTheme.Text.TabTitle" parent="AppTheme.Text">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/futuramedium</item>
         <item name="android:textColor">@color/blue</item>
+    </style>
+
+    <style name="AppTheme.Text.Title" parent="AppTheme.Text">
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/futuramedium</item>
     </style>
 
     <style name="AppTheme.Text.Title2" parent="AppTheme.Text">
@@ -76,16 +77,17 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
-    <style name="AppTheme.Text.Title3" parent="AppTheme.Text">
-        <item name="android:textSize">12sp</item>
-        <item name="android:textAllCaps">true</item>
+    <style name="AppTheme.Text.Title3" parent="AppTheme.Text.Title2">
         <item name="android:textColor">@color/textSecondary</item>
+    </style>
+
+    <style name="AppTheme.Text.Title4" parent="AppTheme.Text">
+        <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="AppTheme.Text.Primary" parent="AppTheme.Text">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/textPrimary</item>
     </style>
 
     <style name="AppTheme.Text.BodyLink" parent="AppTheme.Text">
