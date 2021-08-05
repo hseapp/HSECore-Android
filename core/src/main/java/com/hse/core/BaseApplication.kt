@@ -10,7 +10,7 @@ import android.content.Context
 import com.hse.core.di.BaseAppComponent
 import java.util.concurrent.ConcurrentHashMap
 
-abstract class    BaseApplication : Application() {
+abstract class BaseApplication : Application() {
 
     init {
         appContext = this
