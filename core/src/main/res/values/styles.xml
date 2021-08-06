@@ -66,7 +66,9 @@
     <style name="AppTheme.Text.TabTitle" parent="AppTheme.Text">
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/futuramedium</item>
-        <item name="android:textColor">@color/blue</item>
+        <item name="android:textColor">@color/grayLight</item>
+        <item name="tabTextColor">@color/grayLight</item>
+        <item name="tabSelectedTextColor">@color/blue</item>
     </style>
 
     <style name="AppTheme.Text.Title2" parent="AppTheme.Text">
