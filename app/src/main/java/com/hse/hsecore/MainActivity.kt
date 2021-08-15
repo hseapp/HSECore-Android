@@ -24,10 +24,10 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalContracts
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.list_footer)
 
-        val titles = arrayListOf("Title 1", "Title 2", "Title 3")
-        spinner?.adapter = ArrayAdapter(this, R.layout.spinner_item, titles)
+//        val titles = arrayListOf("Title 1", "Title 2", "Title 3")
+//        spinner?.adapter = ArrayAdapter(this, R.layout.spinner_item, titles)
     }
 
     fun showBottomSheet(v: View) {

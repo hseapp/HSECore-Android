@@ -4,14 +4,20 @@
   ~ All Rights Reserved.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ProgressBar
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="24dp"
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="@dimen/progressbar_size"
         android:layout_height="@dimen/progressbar_size"
         android:layout_gravity="center" />
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
