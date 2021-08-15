@@ -8,5 +8,5 @@
     android:shape="rectangle">
     <corners android:radius="6dp"/>
     <solid
-        android:color="@color/buttonTransparent"/>
+        android:color="@color/buttonNormalDisabled"/>
 </shape>
