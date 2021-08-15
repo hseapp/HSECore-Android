@@ -8,14 +8,12 @@ package com.hse.hsecore
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hse.core.common.dip
 import com.hse.core.ui.bottomsheets.BottomSheetAdapter
 import com.hse.core.ui.widgets.BottomSheet
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.dialog_settings.view.*
 import kotlin.contracts.ExperimentalContracts
 
@@ -24,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     @ExperimentalContracts
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.list_footer)
+        setContentView(R.layout.activity_main)
 
 //        val titles = arrayListOf("Title 1", "Title 2", "Title 3")
 //        spinner?.adapter = ArrayAdapter(this, R.layout.spinner_item, titles)
