@@ -183,7 +183,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         recyclerView?.removeOnScrollListener(hideKeyboardScrollListener)
     }
 
-    fun showErrorView(t: Throwable?) {
+    open fun showErrorView(t: Throwable?) {
         if (adapter?.isEmpty() == true) {
             removeAllOverlays(false)
             val errorView = getErrorView(t)
@@ -204,7 +204,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         }
     }
 
-    fun showEmptyView(emptyView: View = getEmptyView()) {
+    open fun showEmptyView(emptyView: View = getEmptyView()) {
         removeAllOverlays(false)
         emptyView.setInvisible()
         overlayViews.add(emptyView)
@@ -220,7 +220,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         emptyView.fadeIn()
     }
 
-    fun hideEmptyView(emptyView: View = getEmptyView()) {
+    open fun hideEmptyView(emptyView: View = getEmptyView()) {
         removeAllOverlays(false)
         emptyView.setInvisible()
         overlayViews.remove(emptyView)
@@ -229,7 +229,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         )
     }
 
-    fun removeAllOverlays(withAnimation: Boolean = true) {
+    open fun removeAllOverlays(withAnimation: Boolean = true) {
         synchronized(this) {
             for (v in overlayViews) {
                 if (withAnimation) {
@@ -239,12 +239,12 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         }
     }
 
-    fun checkForEmpty() {
+    open fun checkForEmpty() {
         if (adapter?.getRealItemCount() == 0 && currentState == LoadingState.IDLE) showEmptyView()
         else hideEmptyView()
     }
 
-    fun setState(state: LoadingState) {
+    open fun setState(state: LoadingState) {
         if (currentState == state) return
         currentState = state
         swipeRefresh?.isEnabled = true

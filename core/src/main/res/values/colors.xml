@@ -29,6 +29,7 @@
     <color name="searchBarInlineIcon">#818C99</color>
 
     <color name="buttonNormal">@color/blue</color>
+    <color name="buttonNormalDisabled">@color/blueInactive</color>
     <color name="buttonNormalText">#fff</color>
     <color name="buttonTransparent">@color/blueLight</color>
     <color name="buttonTransparentText">@color/blue</color>
@@ -43,7 +44,7 @@
     <color name="blueLight">#15558dff</color>
     <color name="blue">#0050cf</color>
     <color name="blueDark">#155BB7</color>
-    <color name="blueInactive">#8CB9F3</color>
+    <color name="blueInactive">#40558dff</color>
 
     <color name="red">#FF564E</color>
     <color name="red2">#e57373</color>
