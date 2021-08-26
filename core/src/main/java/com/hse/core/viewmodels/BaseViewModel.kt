@@ -6,11 +6,13 @@
 package com.hse.core.viewmodels
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.hse.core.enums.LoadingState
 
 abstract class BaseViewModel : ViewModel() {
     abstract val loadingState: MutableLiveData<LoadingState>?
+    lateinit var savedStateHandle: SavedStateHandle
     var params: ViewModelParams? = null
         set(value) {
             field = value
