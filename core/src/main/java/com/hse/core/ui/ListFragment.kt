@@ -59,8 +59,10 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         }
     }
 
-    open fun getErrorView(t: Throwable?): View {
-        return EmptyView(requireContext()).apply {
+    open fun getErrorView(t: Throwable?): View? {
+        if (isNotAvailable()) return null
+        val context = context ?: return null
+        return EmptyView(context).apply {
             setImage(R.drawable.nointernetru)
             setTitle(string(R.string.error_occurred))
             setSubtitle(string(R.string.error_occurred_description))
@@ -68,8 +70,10 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         }
     }
 
-    open fun getEmptyView(): View {
-        return EmptyView(requireContext()).apply {
+    open fun getEmptyView(): View? {
+        if (isNotAvailable()) return null
+        val context = context ?: return null
+        return EmptyView(context).apply {
             setImage(R.drawable.nodata)
             setTitle(string(R.string.empty_list))
             setSubtitle(string(R.string.empty_list_description))
@@ -187,24 +191,27 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         if (adapter?.isEmpty() == true) {
             removeAllOverlays(false)
             val errorView = getErrorView(t)
-            errorView.setInvisible()
-            overlayViews.add(errorView)
-            mainLayout?.addView(
-                errorView,
-                CoordinatorLayout.LayoutParams(
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT,
-                    CoordinatorLayout.LayoutParams.MATCH_PARENT
-                ).apply {
-                    topMargin = getOverlayViewsMargin()
-                }
-            )
-            errorView.fadeIn()
+            if (errorView != null) {
+                errorView.setInvisible()
+                overlayViews.add(errorView)
+                mainLayout?.addView(
+                    errorView,
+                    CoordinatorLayout.LayoutParams(
+                        CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                        CoordinatorLayout.LayoutParams.MATCH_PARENT
+                    ).apply {
+                        topMargin = getOverlayViewsMargin()
+                    }
+                )
+                errorView.fadeIn()
+            }
         } else {
             showToast(string(R.string.error_occurred))
         }
     }
 
-    open fun showEmptyView(emptyView: View = getEmptyView()) {
+    open fun showEmptyView(emptyView: View? = getEmptyView()) {
+        if (isNotAvailable() || emptyView == null) return
         removeAllOverlays(false)
         emptyView.setInvisible()
         overlayViews.add(emptyView)
@@ -220,7 +227,8 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
         emptyView.fadeIn()
     }
 
-    open fun hideEmptyView(emptyView: View = getEmptyView()) {
+    open fun hideEmptyView(emptyView: View? = getEmptyView()) {
+        if (isNotAvailable() || emptyView == null) return
         removeAllOverlays(false)
         emptyView.setInvisible()
         overlayViews.remove(emptyView)
@@ -230,11 +238,18 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     }
 
     open fun removeAllOverlays(withAnimation: Boolean = true) {
+        if (isNotAvailable()) return
         synchronized(this) {
             for (v in overlayViews) {
                 if (withAnimation) {
-                    v.fadeOut { mainLayout?.removeView(v) }
-                } else mainLayout?.removeView(v)
+                    v.fadeOut {
+                        if (!isNotAvailable()) {
+                            mainLayout?.removeView(v)
+                        }
+                    }
+                } else {
+                    mainLayout?.removeView(v)
+                }
             }
         }
     }
@@ -245,7 +260,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
     }
 
     open fun setState(state: LoadingState) {
-        if (currentState == state) return
+        if (currentState == state || isNotAvailable()) return
         currentState = state
         swipeRefresh?.isEnabled = true
         when (state) {
