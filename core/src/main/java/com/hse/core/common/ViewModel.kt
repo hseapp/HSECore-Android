@@ -5,11 +5,8 @@
 
 package com.hse.core.common
 
-import android.os.Bundle
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.savedstate.SavedStateRegistryOwner
+import androidx.lifecycle.ViewModelProvider
 import com.hse.core.viewmodels.BaseViewModel
 import com.hse.core.viewmodels.ViewModelParams
 import dagger.MapKey
@@ -27,22 +24,15 @@ import kotlin.reflect.KClass
 annotation class ViewModelKey(val value: KClass<out ViewModel>)
 
 open class BaseViewModelFactory @Inject constructor(
-    private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>,
-    owner: SavedStateRegistryOwner,
-    defaultArgs: Bundle? = null
-) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
+    private val viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>
+) : ViewModelProvider.Factory {
 
     var paramsInjector: (() -> ViewModelParams)? = null
 
-    override fun <T : ViewModel?> create(
-        key: String,
-        modelClass: Class<T>,
-        handle: SavedStateHandle
-    ): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val viewModel = viewModels[modelClass]?.get() as T
-        (viewModel as? BaseViewModel)?.let { model ->
-            model.savedStateHandle = handle
-            paramsInjector?.let { model.params = it.invoke() }
+        paramsInjector?.let {
+            if (viewModel is BaseViewModel) viewModel.params = it.invoke()
         }
         return viewModel
     }
