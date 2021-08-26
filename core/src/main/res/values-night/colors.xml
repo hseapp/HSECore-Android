@@ -43,6 +43,7 @@
     <color name="blueLight">#155395FF</color>
     <color name="red">#F0522B</color>
 
+    <color name="grayLight">#7c89a3</color>
     <color name="gray">@color/searchBarBackground</color>
 
 </resources>
