@@ -101,6 +101,16 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
         else doOnReady = task
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        viewModel.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        viewModel.onViewStateRestored(savedInstanceState)
+    }
+
     final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

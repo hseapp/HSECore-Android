@@ -5,6 +5,7 @@
 
 package com.hse.core.viewmodels
 
+import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hse.core.enums.LoadingState
@@ -23,6 +24,9 @@ abstract class BaseViewModel : ViewModel() {
     fun doOnParamsReady(unit: (params: ViewModelParams?) -> Unit) {
         paramsReadyListeners.add(unit)
     }
+
+    open fun onSaveInstanceState(bundle: Bundle?) = Unit
+    open fun onViewStateRestored(bundle: Bundle?) = Unit
 }
 
 open class ViewModelParams
