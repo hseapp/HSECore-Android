@@ -14,6 +14,7 @@ import com.hse.core.enums.LoadingState
 abstract class BaseViewModel : ViewModel() {
     abstract val loadingState: MutableLiveData<LoadingState>?
     var params: ViewModelParams? = null
+    protected var savedInstanceState: Bundle? = null
 
     private var paramsReadyListeners = arrayListOf<(params: ViewModelParams?) -> Unit>()
 
@@ -22,12 +23,15 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     open fun onSaveInstanceState(bundle: Bundle?) = Unit
+
     @CallSuper
     open fun onViewStateRestored(bundle: Bundle?) {
-        if (bundle == null) {
+        if (bundle == null || savedInstanceState == null) {
+            savedInstanceState = bundle
             for (p in paramsReadyListeners) p.invoke(params)
             paramsReadyListeners.clear()
         }
+        savedInstanceState = bundle
     }
 }
 
