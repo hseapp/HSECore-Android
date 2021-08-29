@@ -6,6 +6,7 @@
 package com.hse.core.viewmodels
 
 import android.os.Bundle
+import androidx.annotation.CallSuper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hse.core.enums.LoadingState
@@ -13,11 +14,6 @@ import com.hse.core.enums.LoadingState
 abstract class BaseViewModel : ViewModel() {
     abstract val loadingState: MutableLiveData<LoadingState>?
     var params: ViewModelParams? = null
-        set(value) {
-            field = value
-            for (p in paramsReadyListeners) p.invoke(value)
-            paramsReadyListeners.clear()
-        }
 
     private var paramsReadyListeners = arrayListOf<(params: ViewModelParams?) -> Unit>()
 
@@ -26,7 +22,13 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     open fun onSaveInstanceState(bundle: Bundle?) = Unit
-    open fun onViewStateRestored(bundle: Bundle?) = Unit
+    @CallSuper
+    open fun onViewStateRestored(bundle: Bundle?) {
+        if (bundle == null) {
+            for (p in paramsReadyListeners) p.invoke(params)
+            paramsReadyListeners.clear()
+        }
+    }
 }
 
 open class ViewModelParams
