@@ -105,7 +105,10 @@ open class SearchBar @JvmOverloads constructor(
     fun getText(): CharSequence = editText.text
     fun showKeyboard() = editText.showKeyboard()
     fun setHint(@StringRes res: Int) = editText.setHint(res)
-    fun setText(text: CharSequence?) = editText.setText(text)
+    fun setText(text: CharSequence?) {
+        editText.setText(text)
+        editText.setSelection(text?.length ?: 0)
+    }
 
     override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
