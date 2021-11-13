@@ -86,7 +86,7 @@ class AsyncDiffUtil<T>(
 
                         if (oldList == null) {
                             insert(newList as List<T>)
-                        } else if (oldList != newList) {
+                        } else {
                             val callback = diffUtilCallback(oldList, newList as List<T>, itemCallback)
                             val result = DiffUtil.calculateDiff(callback)
                             if (coroutineContext.isActive) latch(newList, result)
