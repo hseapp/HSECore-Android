@@ -18,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.core.view.updateLayoutParams
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -108,12 +109,13 @@ abstract class BottomSheet(val context: Context) {
     private fun getDecoratedView(): View {
         val layout =
             LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null, false) as ViewGroup
-        layout.updateLayoutParams<ViewGroup.LayoutParams> {
+       // layout.findViewById<FrameLayout>(R.id.content).layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        layout.findViewById<FrameLayout>(R.id.content).updateLayoutParams<ViewGroup.LayoutParams> {
             onUpdateLayoutParams?.onUpdate(this)
         }
         handleLayout = layout.findViewById(R.id.header)
         handle = layout.findViewById(R.id.handle)
-        layout.findViewById<ViewGroup>(R.id.content).addView(getView())
+        layout.findViewById<FrameLayout>(R.id.content).addView(getView())
         return layout
     }
 
