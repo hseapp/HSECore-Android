@@ -19,6 +19,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.RequiresApi
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.hse.core.R
@@ -43,6 +44,7 @@ abstract class BottomSheet(val context: Context) {
     protected var isSkipCollapsed = false
     protected var defaultState = BottomSheetBehavior.STATE_EXPANDED
     protected var peekHeight = dip(100f)
+    protected var onUpdateLayoutParams: UpdateLayoutParams? = null
     protected var bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
@@ -56,6 +58,10 @@ abstract class BottomSheet(val context: Context) {
     fun show() {
         val bottomView = getBottomView()
         val dialogView = getDecoratedView()
+
+        dialogView.updateLayoutParams<ViewGroup.LayoutParams> {
+            onUpdateLayoutParams?.onUpdate(this)
+        }
 
         dialog = SheetDialog(context, R.style.BottomSheet)
         dialog?.setContentView(dialogView)
@@ -143,5 +149,9 @@ abstract class BottomSheet(val context: Context) {
 
 
         }
+    }
+
+    fun interface UpdateLayoutParams {
+        fun onUpdate(params: ViewGroup.LayoutParams)
     }
 }
