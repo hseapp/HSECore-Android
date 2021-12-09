@@ -59,10 +59,6 @@ abstract class BottomSheet(val context: Context) {
         val bottomView = getBottomView()
         val dialogView = getDecoratedView()
 
-        dialogView.updateLayoutParams<ViewGroup.LayoutParams> {
-            onUpdateLayoutParams?.onUpdate(this)
-        }
-
         dialog = SheetDialog(context, R.style.BottomSheet)
         dialog?.setContentView(dialogView)
         dialog?.setOnDismissListener { onDismiss() }
@@ -112,6 +108,9 @@ abstract class BottomSheet(val context: Context) {
     private fun getDecoratedView(): View {
         val layout =
             LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null, false) as ViewGroup
+        layout.updateLayoutParams<ViewGroup.LayoutParams> {
+            onUpdateLayoutParams?.onUpdate(this)
+        }
         handleLayout = layout.findViewById(R.id.header)
         handle = layout.findViewById(R.id.handle)
         layout.findViewById<ViewGroup>(R.id.content).addView(getView())
