@@ -26,6 +26,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.hse.core.R
 import com.hse.core.common.color
 import com.hse.core.common.dip
+import android.view.Display
+
+import android.view.WindowManager
+
+
+
 
 
 abstract class BottomSheet(val context: Context) {
@@ -110,9 +116,8 @@ abstract class BottomSheet(val context: Context) {
         val layout =
             LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null, false) as ViewGroup
        // layout.findViewById<FrameLayout>(R.id.content).layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        layout.findViewById<FrameLayout>(R.id.content).updateLayoutParams<ViewGroup.LayoutParams> {
-            onUpdateLayoutParams?.onUpdate(this)
-        }
+
+        //layout.findViewById<FrameLayout>(R.id.content).minimumHeight = height
         handleLayout = layout.findViewById(R.id.header)
         handle = layout.findViewById(R.id.handle)
         layout.findViewById<FrameLayout>(R.id.content).addView(getView())

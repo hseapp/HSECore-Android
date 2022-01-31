@@ -44,6 +44,7 @@
         <item name="android:fontFamily">@font/futuramedium</item>
         <item name="fontFamily">@font/futuramedium</item>
         <item name="actionOverflowButtonStyle">@style/App.ThemeOverlay.ActionButton.Overflow</item>
+        <item name="popupMenuBackground">@color/windowBackground</item>
     </style>
     
     <style name="App.ThemeOverlay.ActionButton.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
