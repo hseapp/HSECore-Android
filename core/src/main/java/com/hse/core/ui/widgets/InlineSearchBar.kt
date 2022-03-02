@@ -18,7 +18,7 @@ import com.hse.core.common.dip
 import com.hse.core.common.onClick
 
 
-class InlineSearchBar @JvmOverloads constructor(
+open class InlineSearchBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -62,6 +62,10 @@ class InlineSearchBar @JvmOverloads constructor(
                 Gravity.START or Gravity.CENTER_VERTICAL
             ).apply { marginStart = dip(24f) }
         )
+    }
+
+    fun setParamsButtonChecked(checked: Boolean) {
+        paramsButton.setColorFilter(if (checked) color(R.color.blue) else color(R.color.searchBarInlineIcon))
     }
 
     fun setLeftIcon(res: Int, click: () -> Unit) {
