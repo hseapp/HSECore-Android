@@ -18,12 +18,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.hse.core.R
 import com.hse.core.common.color
 import com.hse.core.common.dip
+import android.view.Display
+
+import android.view.WindowManager
+
+
+
 
 
 abstract class BottomSheet(val context: Context) {
@@ -43,6 +51,7 @@ abstract class BottomSheet(val context: Context) {
     protected var isSkipCollapsed = false
     protected var defaultState = BottomSheetBehavior.STATE_EXPANDED
     protected var peekHeight = dip(100f)
+    protected var onUpdateLayoutParams: UpdateLayoutParams? = null
     protected var bottomSheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
         override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
@@ -106,9 +115,12 @@ abstract class BottomSheet(val context: Context) {
     private fun getDecoratedView(): View {
         val layout =
             LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null, false) as ViewGroup
+       // layout.findViewById<FrameLayout>(R.id.content).layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+        //layout.findViewById<FrameLayout>(R.id.content).minimumHeight = height
         handleLayout = layout.findViewById(R.id.header)
         handle = layout.findViewById(R.id.handle)
-        layout.findViewById<ViewGroup>(R.id.content).addView(getView())
+        layout.findViewById<FrameLayout>(R.id.content).addView(getView())
         return layout
     }
 
@@ -143,5 +155,9 @@ abstract class BottomSheet(val context: Context) {
 
 
         }
+    }
+
+    fun interface UpdateLayoutParams {
+        fun onUpdate(params: ViewGroup.LayoutParams)
     }
 }
