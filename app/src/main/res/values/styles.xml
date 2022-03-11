@@ -3,10 +3,12 @@
   ~ All Rights Reserved.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- needed for xiaomi dark mode -->
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- Customize your theme here. -->
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
         <item name="colorPrimary">@color/colorPrimary</item>
