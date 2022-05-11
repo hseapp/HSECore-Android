@@ -241,6 +241,8 @@ abstract class BaseFragment<T : BaseViewModel> : Fragment() {
             rootTag: String? = null,
             @IntRange(from = -1, to = Int.MAX_VALUE.toLong()) requestCode: Int = -1
         ) {
+            ctx?.hideKeyboard()
+
             arguments.putInt(ARG_RANDOM_KEY, (0..Integer.MAX_VALUE).random())
             arguments.putParcelableArrayList(ARG_COMMON_VIEWS, commonViews)
             arguments.putInt(ARG_REQUEST_CODE, requestCode)

@@ -10,6 +10,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.hse.core.BaseApplication
 import com.hse.core.common.BaseViewModelFactory
+import com.hse.core.common.hideKeyboard
 import com.hse.core.navigation.Navigation
 import com.hse.core.utils.KeyboardInterceptor
 import com.hse.core.utils.KeyboardListener
@@ -60,6 +61,10 @@ open class BaseActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         navigation?.getCurrentTopFragment()?.onActivityResult(requestCode, resultCode, data)
+    }
+
+    fun hideKeyboard() {
+        navigation?.getCurrentTopFragment()?.view?.hideKeyboard()
     }
 
 }
