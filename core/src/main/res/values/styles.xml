@@ -15,9 +15,10 @@
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
-        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/statusBar</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/transparentWindowBackground</item>
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigationBar</item>
         <item name="android:progressBarStyleHorizontal">@style/App.ThemeOverlay.ProgressBar.Horizontal</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="App.ThemeOverlay.ProgressBar.Horizontal" parent="Widget.AppCompat.ProgressBar.Horizontal">
