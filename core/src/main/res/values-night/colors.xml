@@ -6,7 +6,6 @@
 
 <resources>
     <color name="windowBackground">#202124</color>
-    <color name="transparentWindowBackground">#10202124</color>
     <color name="statusBar">#33000000</color>
     <color name="navigationBar">#1B1C1E</color>
     <color name="bottomNavigation">@color/navigationBar</color>
