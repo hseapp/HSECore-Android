@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val t: Toolbar = findViewById(R.id.toolbar)
         t.inflateMenu(R.menu.test_menu)
-        //showBottomSheet()
+        showBottomSheet()
+
 //        val titles = arrayListOf("Title 1", "Title 2", "Title 3")
 //        spinner?.adapter = ArrayAdapter(this, R.layout.spinner_item, titles)
     }

@@ -6,6 +6,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,7 +17,7 @@
         android:layout_marginTop="8dp"
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="26dp"
         android:background="@drawable/bottom_sheet_header"
         android:elevation="10dp">
 
@@ -26,6 +27,62 @@
             android:layout_height="4dp"
             android:layout_gravity="center"
             android:background="@drawable/bottom_sheet_header_handle" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:elevation="10dp"
+        tools:visibility="visible"
+        android:background="@color/windowBackground"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingTop="4dp"
+            android:fontFamily="@font/futuramedium"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingBottom="4dp"
+            android:text="@string/cancel_bottomsheet"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:layout_gravity="start" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="Title"
+            android:paddingBottom="4dp"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="@color/textPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/doneBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:paddingTop="4dp"
+            android:focusable="true"
+            android:fontFamily="@font/futuramedium"
+            android:gravity="center"
+            android:paddingEnd="16dp"
+            android:paddingBottom="4dp"
+            android:text="@string/done_bottomsheet"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:layout_gravity="end" />
+
     </FrameLayout>
 
 

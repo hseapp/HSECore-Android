@@ -29,9 +29,7 @@ import com.hse.core.common.dip
 import android.view.Display
 
 import android.view.WindowManager
-
-
-
+import com.google.android.material.textview.MaterialTextView
 
 
 abstract class BottomSheet(val context: Context) {
@@ -46,6 +44,12 @@ abstract class BottomSheet(val context: Context) {
 
     protected lateinit var handleLayout: ViewGroup
     protected lateinit var handle: View
+    private var actionBar: FrameLayout? = null
+    private var actionBarCallback: ActionBarCallback? = null
+    private var isActionBarShown = false
+    private var positiveText: String? = null
+    private var negativeText: String? = null
+    private var title: String? = null
 
     protected var isHidable = true
     protected var isSkipCollapsed = false
@@ -115,8 +119,34 @@ abstract class BottomSheet(val context: Context) {
     private fun getDecoratedView(): View {
         val layout =
             LayoutInflater.from(context).inflate(R.layout.bottom_sheet, null, false) as ViewGroup
-       // layout.findViewById<FrameLayout>(R.id.content).layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        // layout.findViewById<FrameLayout>(R.id.content).layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
+        val positive = layout.findViewById<MaterialTextView>(R.id.doneBtn)
+        val negative = layout.findViewById<MaterialTextView>(R.id.cancelBtn)
+
+        actionBar = layout.findViewById(R.id.action_bar)
+
+        if (isActionBarShown) actionBar?.visibility = View.VISIBLE
+
+        title?.let {
+            setTitle(it)
+        }
+
+        negativeText?.let {
+            negative?.text = it
+        }
+
+        positiveText?.let {
+            positive?.text = it
+        }
+
+        positive?.setOnClickListener {
+            actionBarCallback?.onPositive() ?: dismiss()
+        }
+
+        negative?.setOnClickListener {
+            actionBarCallback?.onNegative() ?: dismiss()
+        }
         //layout.findViewById<FrameLayout>(R.id.content).minimumHeight = height
         handleLayout = layout.findViewById(R.id.header)
         handle = layout.findViewById(R.id.handle)
@@ -155,6 +185,37 @@ abstract class BottomSheet(val context: Context) {
 
 
         }
+    }
+
+    fun showActionBar(isShown: Boolean, negativeText: String? = null, positiveText: String? = null) {
+        isActionBarShown = isShown
+
+        if (isShown) {
+            this.positiveText = positiveText
+            this.negativeText = negativeText
+            if (positiveText != null) actionBar?.findViewById<MaterialTextView>(R.id.doneBtn)?.text = positiveText
+            if (negativeText != null) actionBar?.findViewById<MaterialTextView>(R.id.cancelBtn)?.text = negativeText
+            actionBar?.visibility = View.VISIBLE
+        } else {
+            actionBar?.visibility = View.GONE
+        }
+    }
+
+    fun setTitle(text: String) {
+        title = text
+        actionBar?.findViewById<MaterialTextView>(R.id.title)?.let {
+            it.visibility = View.VISIBLE
+            it.text = text
+        }
+    }
+
+    fun setActionBarCallback(callback: ActionBarCallback?) {
+        actionBarCallback = callback
+    }
+
+    interface ActionBarCallback {
+        fun onPositive()
+        fun onNegative()
     }
 
     fun interface UpdateLayoutParams {

@@ -18,4 +18,6 @@
     <string name="yes">Yes</string>
     <string name="drop_date">Reset the date</string>
     <string name="select_new_date">Choose a date</string>
+    <string name="done_bottomsheet">Done</string>
+    <string name="cancel_bottomsheet">Cancel</string>
 </resources>

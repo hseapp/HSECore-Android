@@ -18,4 +18,6 @@
     <string name="yes">Да</string>
     <string name="drop_date">Сбросить дату</string>
     <string name="select_new_date">Выбрать дату</string>
+    <string name="done_bottomsheet">Готово</string>
+    <string name="cancel_bottomsheet">Отмена</string>
 </resources>
