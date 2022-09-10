@@ -19,21 +19,14 @@
         <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/navigationBar</item>
         <item name="android:progressBarStyleHorizontal">@style/App.ThemeOverlay.ProgressBar.Horizontal</item>
 
-        <item name="bottomSheetStyle">@style/BottomSheetDialogTheme</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheet</item>
     </style>
 
-    <style name="BottomSheetDialogTheme" parent="@style/Theme.Design.Light.BottomSheetDialog">
+    <style name="BottomSheet" parent="@style/Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item> <!-- This is important -->
         <item name="android:statusBarColor">@android:color/transparent</item> <!-- And then this will be needed -->
         <item name="android:navigationBarColor">@color/windowBackground</item>
-        <item name="android:colorBackground">@color/windowBackground</item>
-    </style>
-
-    <style name="StyleBottomSheet" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item> <!-- This is important -->
-        <item name="android:statusBarColor">@android:color/transparent</item> <!-- And then this will be needed -->
-        <item name="android:navigationBarColor">@color/windowBackground</item>
-        <item name="android:colorBackground">@color/windowBackground</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
     </style>
 
     <style name="App.ThemeOverlay.ProgressBar.Horizontal" parent="Widget.AppCompat.ProgressBar.Horizontal">
@@ -144,12 +137,6 @@
         <item name="android:textColor">@color/textPrimary</item>
     </style>
 
-    <style name="BottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/BottomSheet</item>
-    </style>
 
-    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-    </style>
 
 </resources>
