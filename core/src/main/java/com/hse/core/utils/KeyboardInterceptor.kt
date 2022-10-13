@@ -29,7 +29,7 @@ class KeyboardInterceptorImpl @Inject constructor() :
     override fun subscribe() = channel.openSubscription()
 
     override fun publishEvent(event: KeyboardEvent) {
-        channel.offer(event)
+        channel.trySend(event).isSuccess
     }
 }
 

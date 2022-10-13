@@ -297,6 +297,7 @@ abstract class ListFragment<E, T : PaginatedViewModel<E>> : BaseFragment<T>() {
                 adapter?.setIsLoading(false)
                 showErrorView(state.obj as? Throwable)
             }
+            else -> {}
         }
     }
 

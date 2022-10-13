@@ -50,6 +50,7 @@ abstract class PaginatedDataSource<T, J : PaginationResult<T>> {
                         JobType.LOAD_INIT -> doReset(it.obj as Boolean)
                         JobType.LOAD_NEXT -> doLoadNext()
                         JobType.CLEAR -> doClear()
+                        else -> {}
                     }
                 } catch (e: Throwable) {
                     val context = coroutineContext
@@ -79,11 +80,11 @@ abstract class PaginatedDataSource<T, J : PaginationResult<T>> {
                 recreateActor()
             } else return false
         }
-        return actor?.offer(JobType.LOAD_INIT.apply { obj = loadInitCache }) ?: false
+        return actor?.let { it.trySend(JobType.LOAD_INIT.apply { obj = loadInitCache }).isSuccess } ?: false
     }
 
     fun clear() {
-        actor?.offer(JobType.CLEAR)
+        actor?.let { it.trySend(JobType.CLEAR).isSuccess }
     }
 
     fun loadCached() {
@@ -95,7 +96,7 @@ abstract class PaginatedDataSource<T, J : PaginationResult<T>> {
 
     fun loadNext(): Boolean {
         if (!hasMore || currentState != LoadingState.IDLE) return false
-        return actor?.offer(JobType.LOAD_NEXT) ?: false
+        return actor?.let { it.trySend(JobType.LOAD_NEXT).isSuccess } ?: false
     }
 
     private suspend fun doClear() {
@@ -136,7 +137,9 @@ abstract class PaginatedDataSource<T, J : PaginationResult<T>> {
         if (list == null) return
         if (newState != null) currentState = newState
         withContext(Dispatchers.Main) {
-            if (newState != null) loadingState?.value = newState
+            newState?.let {
+                loadingState?.value = it
+            }
             if (clear) liveData.value?.clear()
             liveData += list
         }

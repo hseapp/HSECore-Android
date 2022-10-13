@@ -1,0 +1,1 @@
+/Users/daniilsandrenkov/Documents/HSECore-Android/buildSrc/build/classes/kotlin/main/Config.class:/Users/daniilsandrenkov/Documents/HSECore-Android/buildSrc/build/classes/kotlin/main/Deps.class:/Users/daniilsandrenkov/Documents/HSECore-Android/buildSrc/build/classes/kotlin/main/Versions.class

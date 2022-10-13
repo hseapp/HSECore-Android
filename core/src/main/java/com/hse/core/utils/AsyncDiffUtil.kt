@@ -46,9 +46,9 @@ class AsyncDiffUtil<T>(
             onSubmitted?.invoke()
         } else {
             if (newList == null || newList.isEmpty()) {
-                actor.offer(Operation.Clear)
+                actor.trySend(Operation.Clear).isSuccess
             } else {
-                actor.offer(Operation.Update(newList))
+                actor.trySend(Operation.Update(newList)).isSuccess
             }
         }
     }
